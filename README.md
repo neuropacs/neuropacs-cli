@@ -61,7 +61,7 @@ sudo docker run --rm neuropacs check-status --order-id <order_id>
 
 ### Get results
 
-```bas
+```bash
 sudo docker run --rm neuropacs get-results --order-id <order_id> --format <format>
 ```
 
