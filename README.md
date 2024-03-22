@@ -1,5 +1,3 @@
-USAGE:
-
 # Neuropacs CLI
 
 This project provides a CLI for the Neuropacs project via a Docker container. This project provides a Dockerfile to build the Neuropacs CLI Docker image.
