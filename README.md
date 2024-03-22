@@ -20,6 +20,7 @@ These instructions will get you a copy of the project up and running on your loc
 #### Option 2: Pull the neuropacs-cli repository and build from the Dockerfile
 
 1. Pull the neuropacs-cli repository
+   Note: Git is required for this option
 
 ```bash
 git clone https://github.com/neuropacs/neuropacs-cli.git
