@@ -44,7 +44,7 @@ sudo docker run --rm neuropacs new-job
 # Upload a dataset
 
 ```bash
-sudo docker run --rm -v </path/to/datasett>:/data neuropacs upload-dataset --dataset-path /data --order-id <order_id>
+sudo docker run --rm -v </path/to/dataset>:/data neuropacs upload-dataset --dataset-path /data --order-id <order_id>
 ```
 
 # Run an order
