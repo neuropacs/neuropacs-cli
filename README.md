@@ -53,7 +53,7 @@ sudo docker run --rm -v </path/to/dataset>:/data neuropacs upload-dataset --data
 sudo docker run --rm neuropacs run-job --product-id <product_id> --order-id <order_id> --dataset-id <dataset_id>
 ```
 
-# Check order status
+### Check order status
 
 ```bash
 sudo docker run --rm neuropacs check-status --order-id <order_id>
