@@ -2,14 +2,13 @@
 FROM python:3.9-slim
 
 # Set the working directory in the container
-# WORKDIR /usr/src/app
+WORKDIR /usr/src/neuropacs-cli
 
 # Copy the current directory contents into the container
-# COPY . /usr/src/app
+COPY . /usr/src/neuropacs-cli
 
 # Install any needed packages specified in requirements.txt
-# RUN pip install --no-cache-dir -r requirements.txt
-
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Define build-time variables for server_url and api_key
 ARG server_url
@@ -20,6 +19,4 @@ ENV SERVER_URL=$server_url
 ENV API_KEY=$api_key
 
 # Run your CLI tool when the container launches
-ENTRYPOINT ["python", "/usr/src/app/your_script.py"]
-
-# docker build --build-arg server_url=http://example.com --build-arg api_key=yourapikey123 -t your-image-name .
+ENTRYPOINT ["python", "/usr/src/neuropacs-cli/cli.py"]
