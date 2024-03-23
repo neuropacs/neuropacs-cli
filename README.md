@@ -28,11 +28,17 @@ Not yet implemented
 git clone https://github.com/neuropacs/neuropacs-cli.git
 ```
 
-2. Build the image
+2. Navigate to neuropacs-cli project
+
+```bash
+cd neuropacs-cli/
+```
+
+3. Build the image
    Note: Use the server_url and api_key provided by Neuropacs
 
 ```bash
-sudo docker build --build-arg server_url=<server_url> --build-arg api_key=<api_key> -t neuropacs /path/to/neuropacs-cli/project
+sudo docker build --build-arg server_url=<server_url> --build-arg api_key=<api_key> -t neuropacs .neuropacs-cli/project
 ```
 
 ## Usage
