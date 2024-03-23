@@ -17,6 +17,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 #### Option 1: Pull from Docker container registry
 
+Not yet implemented
+
 #### Option 2: Pull the neuropacs-cli repository and build from the Dockerfile
 
 1. Pull the neuropacs-cli repository
