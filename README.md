@@ -43,19 +43,21 @@ sudo docker build --build-arg server_url=<server_url> --build-arg api_key=<api_k
 
 ## Usage
 
-### Create a new order (returns an order_id)
+### Create a new order (returns an order ID)
 
 ```bash
 sudo docker run --rm neuropacs new-job
 ```
 
-### Upload a dataset
+### Upload a dataset (returns a dataset ID)
 
 ```bash
 sudo docker run --rm -v </path/to/dataset>:/data neuropacs upload-dataset --dataset-path /data --order-id <order_id>
 ```
 
 ### Run an order
+
+Note: To use the current PD vs MSP diagnostic pipeline, use "PD/MSA/PSP-v1.0" for <product_id>
 
 ```bash
 sudo docker run --rm neuropacs run-job --product-id <product_id> --order-id <order_id> --dataset-id <dataset_id>
@@ -64,13 +66,13 @@ sudo docker run --rm neuropacs run-job --product-id <product_id> --order-id <ord
 ### Check order status
 
 ```bash
-sudo docker run --rm neuropacs check-status --order-id <order_id>
+sudo docker run --rm neuropacs check-status --order-id <order_id> --dataset-id <dataset_id>
 ```
 
 ### Get results
 
 ```bash
-sudo docker run --rm neuropacs get-results --order-id <order_id> --format <format>
+sudo docker run --rm neuropacs get-results --format <format> --order-id <order_id> --dataset-id <dataset_id>
 ```
 
 ## Authors

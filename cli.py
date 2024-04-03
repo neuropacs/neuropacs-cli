@@ -20,7 +20,6 @@ def main():
     upload_dataset_parser.add_argument('--dataset-path', type=str, required=True, help="Path to the dataset to be uploaded")
     upload_dataset_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     upload_dataset_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID.")
-    
 
     run_job_parser = subparsers.add_parser('run-job', help='Executes a Neuropacs order.')
     run_job_parser.add_argument('--product-id', type=str, required=True, help="Neuropacs product to be executed. ['PD/MSA/PSP-v1.0']")
@@ -39,10 +38,7 @@ def main():
     get_results_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID.")
     get_results_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID.")
 
-
-
     args = parser.parse_args()
-
 
     if args.command == "connect":
         npcs = neuropacs.init(server_url, api_key)
