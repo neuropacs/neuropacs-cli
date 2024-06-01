@@ -39,33 +39,41 @@ sudo docker build . --no-cache --build-arg server_url=<server_url> --build-arg a
 
 ## Usage
 
+Hint: To view the help screen of any command, use the '-h' or '--help' option with any command.
+
 ### Create a new order (returns an order ID)
 
 ```bash
 sudo docker run --rm neuropacs new-job
 ```
 
-### Upload a dataset (returns a dataset ID)
+### Upload a dataset (returns a status code)
 
 ```bash
 sudo docker run --rm -v </path/to/dataset>:/data neuropacs upload-dataset --dataset-path /data --order-id <order_id>
 ```
 
-### Run an order
+### Validate a dataset (returns array of missing/incomplete files)
 
-Note: To use the current PD vs MSP diagnostic pipeline, use "PD/MSA/PSP-v1.0" for <product_id>
+```bash
+sudo docker run --rm -v </path/to/dataset>:/data neuropacs validate-dataset --dataset-path /data --order-id <order_id>
+```
+
+### Run an orde (returns a status code)
+
+Note: To use the current PD vs MSP diagnostic pipeline, use "PD/MSA/PSP-v1.0" for --product-id
 
 ```bash
 sudo docker run --rm neuropacs run-job --product-id <product_id> --order-id <order_id> --dataset-id <dataset_id>
 ```
 
-### Check order status
+### Check order status (returns status object)
 
 ```bash
 sudo docker run --rm neuropacs check-status --order-id <order_id> --dataset-id <dataset_id>
 ```
 
-### Get results
+### Get order results (returns results in specified format)
 
 ```bash
 sudo docker run --rm neuropacs get-results --format <format> --order-id <order_id> --dataset-id <dataset_id>
