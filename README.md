@@ -59,7 +59,7 @@ sudo docker run --rm -v </path/to/dataset>:/data neuropacs upload-dataset --orde
 sudo docker run --rm -v </path/to/dataset>:/data neuropacs validate-dataset --order-id <order_id>
 ```
 
-### Run an orde (returns a status code)
+### Run an order (returns a status code)
 
 Note: To use the current PD vs MSP diagnostic pipeline, use "PD/MSA/PSP-v1.0" for --product-id
 
