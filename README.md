@@ -34,7 +34,7 @@ cd neuropacs-cli/
    Note: Use the server_url and api_key provided by Neuropacs
 
 ```bash
-sudo docker build . --no-cache --build-arg server_url=<server_url> --build-arg api_key=<api_key> -t neuropacs
+sudo docker build . --no-cache --build-arg server_url=SERVER_URL --build-arg api_key=API_KEY -t neuropacs
 ```
 
 ## Usage
