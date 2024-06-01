@@ -22,7 +22,9 @@ def main():
                 '  Create a new order [recommended]:\n'
                 '    sudo docker run --rm neuropacs new-job\n\n'
                 '  Create a new order using an existing connection:\n'
-                '    sudo docker run --rm neuropacs new-job --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n')
+                '    sudo docker run --rm neuropacs new-job --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n',
+                formatter_class=argparse.RawTextHelpFormatter,
+                usage=argparse.SUPPRESS)
     new_job_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID. Required if providing --aes-key.")
     new_job_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
 
@@ -35,7 +37,9 @@ def main():
                 '  Upload a dataset with a custom dataset ID:\n'
                 '    sudo docker run --rm upload-dataset --dataset-path "C:\\path\\to\\dataset" --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --dataset-id example123\n\n'
                 '  Upload a dataset with an existing connection:\n'
-                '    sudo docker run --rm upload-dataset --dataset-path "C:\\path\\to\\dataset" --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n')
+                '    sudo docker run --rm upload-dataset --dataset-path "C:\\path\\to\\dataset" --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n',
+                formatter_class=argparse.RawTextHelpFormatter,
+                usage=argparse.SUPPRESS)
     upload_dataset_parser.add_argument('--dataset-path', type=str, required=True, help="Path of dataset.")
     upload_dataset_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     upload_dataset_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID. If not provided, one will be generated for you.")
@@ -51,7 +55,9 @@ def main():
                 '  Validate a dataset with a custom dataset ID:\n'
                 '    sudo docker run --rm validate-dataset --dataset-path "C:\\path\\to\\dataset" --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --dataset-id example123\n\n'
                 '  Validate a dataset with an existing connection:\n'
-                '    sudo docker run --rm validate-dataset --dataset-path "C:\\path\\to\\dataset" --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n')
+                '    sudo docker run --rm validate-dataset --dataset-path "C:\\path\\to\\dataset" --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n',
+                formatter_class=argparse.RawTextHelpFormatter,
+                usage=argparse.SUPPRESS)
     validate_dataset_parser.add_argument('--dataset-path', type=str, required=True, help="Path of dataset.")
     validate_dataset_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     validate_dataset_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID. Default is same as order ID.")
@@ -68,7 +74,9 @@ def main():
             '  Execute an order with a custom dataset ID:\n'
             '    sudo docker run --rm neuropacs run-job --product-id PD/MSA/PSP-v1.0 --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --dataset-id example123\n\n'
             '  Execute an order using an existing connection:\n'
-            '    sudo docker run --rm neuropacs run-job --product-id PD/MSA/PSP-v1.0--order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n')
+            '    sudo docker run --rm neuropacs run-job --product-id PD/MSA/PSP-v1.0--order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n',
+            formatter_class=argparse.RawTextHelpFormatter,
+            usage=argparse.SUPPRESS)
     run_job_parser.add_argument('--product-id', type=str, required=True, help="Neuropacs product to be executed. ")
     run_job_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     run_job_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID. Default is same as order ID.")
@@ -84,7 +92,9 @@ def main():
         '  Check order status with a custom dataset ID:\n'
         '    sudo docker run --rm neuropacs check-status --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --dataset-id example123\n\n'
         '  Check order status using an existing connection:\n'
-        '    sudo docker run --rm neuropacs check-status --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n')
+        '    sudo docker run --rm neuropacs check-status --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n',
+        formatter_class=argparse.RawTextHelpFormatter,
+        usage=argparse.SUPPRESS)
     check_status_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     check_status_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID. Default is same as order-id.")
     check_status_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID. Required if providing --aes-key.")
@@ -100,7 +110,9 @@ def main():
         '  Retrieves results with a custom dataset ID:\n'
         '    sudo docker run --rm neuropacs get-results --format TXT --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --dataset-id example123\n\n'
         '  CRetrieves results using an existing connection:\n'
-        '    sudo docker run --rm neuropacs get-results --format TXT --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n')
+        '    sudo docker run --rm neuropacs get-results --format TXT --order-id aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee --connection-id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --aes-key yyyyyyyyyyyyyyyyyyy==\n',
+        formatter_class=argparse.RawTextHelpFormatter,
+        usage=argparse.SUPPRESS)
     get_results_parser.add_argument('--format', type=str, required=True, help="Format of result file. ['TXT', 'XML', 'JSON']")
     get_results_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     get_results_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID. Default is same as order-id.")
