@@ -117,7 +117,7 @@ def main():
         connection_id = args.connection_id
         aes_key = args.connection_id
         npcs = neuropacs.init(server_url, api_key)
-        if connection_id and aes_key:
+        if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
@@ -148,7 +148,7 @@ def main():
         dataset_path = args.dataset_path
         order_id = args.order_id
         npcs = neuropacs.init(server_url, api_key)
-        if connection_id and aes_key :
+        if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
@@ -166,7 +166,7 @@ def main():
         order_id = args.order_id
         dataset_id = args.dataset_id
         npcs = neuropacs.init(server_url, api_key)
-        if connection_id and aes_key :
+        if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
@@ -183,7 +183,7 @@ def main():
         order_id = args.order_id
         dataset_id = args.dataset_id
         npcs = neuropacs.init(server_url, api_key)
-        if connection_id and aes_key :
+        if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
@@ -202,7 +202,7 @@ def main():
         dataset_id=args.dataset_id
         format = args.format
         npcs = neuropacs.init(server_url, api_key)
-        if connection_id and aes_key :
+        if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
