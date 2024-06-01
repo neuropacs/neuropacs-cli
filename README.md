@@ -39,7 +39,7 @@ sudo docker build . --no-cache --build-arg server_url=SERVER_URL --build-arg api
 
 ## Usage
 
-Hint: To view the help screen of any command, use the '-h' or '--help' option with any command.
+Hint: To view the help screen of any command, use the '-h' or '--help' option.
 
 ### Create a new order (returns an order ID)
 

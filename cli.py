@@ -41,7 +41,7 @@ def main():
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
     upload_dataset_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
-    upload_dataset_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID. If not provided, one will be generated for you.")
+    upload_dataset_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID. Default is same as order ID.")
     upload_dataset_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID. Required if providing --aes-key.")
     upload_dataset_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
 
