@@ -50,13 +50,13 @@ sudo docker run --rm neuropacs new-job
 ### Upload a dataset (returns a status code)
 
 ```bash
-sudo docker run --rm -v </path/to/dataset>:/data neuropacs upload-dataset --dataset-path /data --order-id <order_id>
+sudo docker run --rm -v </path/to/dataset>:/data neuropacs upload-dataset --order-id <order_id>
 ```
 
 ### Validate a dataset (returns array of missing/incomplete files)
 
 ```bash
-sudo docker run --rm -v </path/to/dataset>:/data neuropacs validate-dataset --dataset-path /data --order-id <order_id>
+sudo docker run --rm -v </path/to/dataset>:/data neuropacs validate-dataset --order-id <order_id>
 ```
 
 ### Run an orde (returns a status code)

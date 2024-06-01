@@ -154,6 +154,7 @@ def main():
     elif args.command == "validate-dataset":
         connection_id = args.connection_id
         aes_key = args.connection_id
+        dataset_id = args.dataset_id
         order_id = args.order_id
         npcs = neuropacs.init(server_url, api_key)
         if (connection_id is not None) and (aes_key is not None) :
