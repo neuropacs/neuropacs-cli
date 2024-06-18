@@ -107,7 +107,7 @@ def main():
         '    sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID\n\n'
         '  Retrieves results with a custom dataset ID:\n'
         '    sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID --dataset-id DATASET_ID\n\n'
-        '  CRetrieves results using an existing connection:\n'
+        '  Retrieves results using an existing connection:\n'
         '    sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
         formatter_class=argparse.RawTextHelpFormatter,
         usage=argparse.SUPPRESS)
