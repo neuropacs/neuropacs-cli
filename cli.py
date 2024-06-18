@@ -120,13 +120,13 @@ def main():
     args = parser.parse_args()
 
     if args.command == "connect":
-        npcs = neuropacs.init(server_url, api_key)
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         conn = npcs.connect()
         print(conn)
     elif args.command == "new-job":
         connection_id = args.connection_id
         aes_key = args.connection_id
-        npcs = neuropacs.init(server_url, api_key)
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
@@ -139,34 +139,32 @@ def main():
         aes_key = args.connection_id
         dataset_id = args.dataset_id
         order_id = args.order_id
-        npcs = neuropacs.init(server_url, api_key)
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         if connection_id and aes_key :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
             npcs.connect()
-        
         if dataset_id is not None: # With custom dataset ID
-            upload_status = npcs.upload_dataset("/data", order_id, dataset_id, callback=lambda data: print(data))
+            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=dataset_id, callback=lambda data: print(data))
         else:   # Default
-            upload_status = npcs.upload_dataset("/data", order_id, order_id, callback=lambda data: print(data))
+            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=order_id, callback=lambda data: print(data))
         print(upload_status)
     elif args.command == "validate-dataset":
         connection_id = args.connection_id
         aes_key = args.connection_id
         dataset_id = args.dataset_id
         order_id = args.order_id
-        npcs = neuropacs.init(server_url, api_key)
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
             npcs.connect()
-
         if dataset_id is not None: # With custom dataset ID
-            validation_results = npcs.validate_upload("/data", order_id, dataset_id, callback=lambda data: print(data))
+            validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=dataset_id, callback=lambda data: print(data))
         else: # Default
-            validation_results = npcs.validate_upload("/data", order_id, order_id, callback=lambda data: print(data))
+            validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=order_id, callback=lambda data: print(data))
         print(validation_results)
     elif args.command == "run-job":
         connection_id = args.connection_id
@@ -174,35 +172,32 @@ def main():
         product_id = args.product_id
         order_id = args.order_id
         dataset_id = args.dataset_id
-        npcs = neuropacs.init(server_url, api_key)
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
             npcs.connect()
-
         if dataset_id is not None: # With custom dataset ID
-            job = npcs.run_job(product_id, order_id, dataset_id)
+            job = npcs.run_job(product_id=product_id, order_id=order_id, dataset_id=dataset_id)
         else: # Default
-            job = npcs.run_job(product_id, order_id, order_id)
+            job = npcs.run_job(product_id=product_id, order_id=order_id, dataset_id=order_id)
         print(job)
     elif args.command == "check-status":
         connection_id = args.connection_id
         aes_key = args.connection_id
         order_id = args.order_id
         dataset_id = args.dataset_id
-        npcs = neuropacs.init(server_url, api_key)
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
             npcs.connect()
-
         if dataset_id is not None: # With custom dataset ID
-            job_status = npcs.check_status(order_id, dataset_id)
+            job_status = npcs.check_status(order_id=order_id, dataset_id=dataset_id)
         else: # Default
-            job_status = npcs.check_status(order_id, order_id)
-        
+            job_status = npcs.check_status(order_id=order_id, dataset_id=order_id)
         print(job_status)
     elif args.command == "get-results":
         connection_id = args.connection_id
@@ -210,17 +205,16 @@ def main():
         order_id = args.order_id
         dataset_id=args.dataset_id
         format = args.format
-        npcs = neuropacs.init(server_url, api_key)
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
             npcs.connect()
-
         if dataset_id is not None: # With custom dataset ID
-            results = npcs.get_results(format, order_id, dataset_id)
+            results = npcs.get_results(format=format, order_id=order_id, dataset_id=dataset_id)
         else: # Default
-            results = npcs.get_results(format, order_id, order_id)
+            results = npcs.get_results(format=format, order_id=order_id, dataset_id=order_id)
         print(results)
 
 
