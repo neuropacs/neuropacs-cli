@@ -41,44 +41,148 @@ sudo docker build . --no-cache --build-arg server_url=SERVER_URL --build-arg api
 
 Hint: To view the help screen of any command, use the '-h' or '--help' option.
 
+### Create a neuropacs session. Returns connection JSON.
+
+Example: Create a neuropacs connection [recommended]:
+
+```bash
+sudo docker run --rm neuropacs connect
+```
+
 ### Create a new order (returns an order ID)
+
+Example: Create a new order [recommended]:
 
 ```bash
 sudo docker run --rm neuropacs new-job
 ```
 
+Example: Create a new order using an existing connection:
+
+```bash
+sudo docker run --rm neuropacs new-job --connection-id CONNECTION_ID --aes-key AES_KEY
+```
+
 ### Upload a dataset (returns a status code)
 
-```bash
-sudo docker run --rm neuropacs -v </path/to/dataset>:/data neuropacs upload-dataset --order-id <order_id>
-```
-
-### Validate a dataset (returns array of missing/incomplete files)
+Example: Upload a dataset [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs -v </path/to/dataset>:/data neuropacs validate-dataset --order-id <order_id>
+sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset --order-id ORDER_ID
 ```
 
-### Run an order (returns a status code)
+Example: Upload a dataset in verbose mode:
+
+```bash
+sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset -v --order-id ORDER_ID
+```
+
+Example: Upload a dataset with a custom dataset ID:
+
+```bash
+sudo docker run --rm -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --dataset-id DATASET_ID
+```
+
+Example: Upload a dataset with an existing connection:
+
+```bash
+sudo docker run --rm -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+```
+
+### Validates an existing dataset. Returns array of missing files.
+
+Example: Validate a dataset [recommended]:
+
+```bash
+sudo docker run --rm -v /path/to/dataset/:/data neuropacs validate-dataset --order-id ORDER_ID
+```
+
+Example: Validate a dataset in verbose mode:
+
+```bash
+sudo docker run --rm -v /path/to/dataset/:/data neuropacs validate-dataset -v --order-id ORDER_ID
+```
+
+Example: Validate a dataset with a custom dataset ID:
+
+```bash
+sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --dataset-id DATASET_ID
+```
+
+Example: Validate a dataset with an existing connection:
+
+```bash
+sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+```
+
+### Executes a Neuropacs order. Returns a status code.
 
 Note: To use the current PD vs MSP diagnostic pipeline, use "PD/MSA/PSP-v1.0" for --product-id
 
-```bash
-sudo docker run --rm neuropacs run-job --product-id <product_id> --order-id <order_id> --dataset-id <dataset_id>
-```
-
-### Check order status (returns status object)
+Example: Executes an order [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs check-status --order-id <order_id> --dataset-id <dataset_id>
+sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID
 ```
 
-### Get order results (returns results in specified format)
+Example: Execute an order with a custom dataset ID:
 
 ```bash
-sudo docker run --rm neuropacs get-results --format <format> --order-id <order_id> --dataset-id <dataset_id>
+sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID --dataset-id DATASET_ID
 ```
 
-## Authors
+Example: Execute an order using an existing connection:
+
+```bash
+sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+```
+
+### Retrieves current status of a running Neuropacs order. Return status JSON.
+
+Example: Check order status [recommended]:
+
+```bash
+sudo docker run --rm neuropacs check-status --order-id ORDER_ID
+```
+
+Example: Check order status with a custom dataset ID:
+
+```bash
+sudo docker run --rm neuropacs check-status --order-id ORDER_ID --dataset-id DATASET_ID
+```
+
+Example: Check order status using an existing connection:
+
+```bash
+sudo docker run --rm neuropacs check-status --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+```
+
+### Retrieves results from completed Neuropacs order. Return result in specified format.
+
+Note: Available formats: TXT, JSON, XML, PNG
+
+Example: Retrieves results [recommended]:
+
+```bash
+sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID
+```
+
+Example: Retrieves results with a custom dataset ID:
+
+```bash
+sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID --dataset-id DATASET_ID
+```
+
+Example: Retrieves results using an existing connection:
+
+```bash
+sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+```
+
+## Author
 
 Kerrick Cavanaugh (kerrick@neuropacs.com)
+
+```
+
+```

@@ -14,10 +14,10 @@ def main():
     subparsers = parser.add_subparsers(dest='command', required=True, help='Neuropacs sub-command help')
 
     subparsers.add_parser('connect', 
-    help='Creates a new session with Neuropacs.',
-    description='Creates a new session with Neuropacs.\n\n'
+    help='Creates a new session with Neuropacs. Returns connection JSON.',
+    description='Creates a new session with Neuropacs. Returns connection JSON.\n\n'
                 'Examples:\n'
-                '  Create a new session [recommended]:\n'
+                '  Create a new session [recommended]:\n'/
                 '    sudo docker run --rm neuropacs connect\n\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
@@ -97,8 +97,8 @@ def main():
     run_job_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
 
     check_status_parser = subparsers.add_parser('check-status', 
-    help='Retrieves current status of a running Neuropacs order.',
-    description='Retrieves current status of a running Neuropacs order.\n\n'
+    help='Retrieves current status of a running Neuropacs order. Return status JSON.',
+    description='Retrieves current status of a running Neuropacs order. Return status JSON.\n\n'
         'Examples:\n'
         '  Check order status [recommended]:\n'
         '    sudo docker run --rm neuropacs check-status --order-id ORDER_ID\n\n'
@@ -114,9 +114,9 @@ def main():
     check_status_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
     
     get_results_parser = subparsers.add_parser('get-results', 
-    help='Retrieves results from completed Neuropacs order.',
+    help='Retrieves results from completed Neuropacs order. Return result in specified format.',
     description='Retrieves current status of a running Neuropacs order.\n'
-        'Available formats: TXT, JSON, XML\n\n'
+        'Available formats: TXT, JSON, XML, PNG\n\n'
         'Examples:\n'
         '  Retrieves results [recommended]:\n'
         '    sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID\n\n'
@@ -194,8 +194,6 @@ def main():
                 validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=order_id, callback=lambda data: print(data))
             else:
                 validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=order_id)
-
-
         print(validation_results)
     elif args.command == "run-job":
         connection_id = args.connection_id
