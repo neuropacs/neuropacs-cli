@@ -40,34 +40,38 @@ def main():
     description='Uploads a dataset. Returns upload status code.\n\n'
                 'Examples:\n'
                 '  Upload a dataset [recommended]:\n'
-                '    sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset --order-id ORDER_ID\n\n'
+                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data neuropacs upload-dataset --order-id ORDER_ID\n\n'
                 '  Upload a dataset with a custom dataset ID:\n'
-                '    sudo docker run --rm -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --dataset-id DATASET_ID\n\n'
+                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --dataset-id DATASET_ID\n\n'
                 '  Upload a dataset with an existing connection:\n'
-                '    sudo docker run --rm -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
     upload_dataset_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     upload_dataset_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID. Default is same as order ID.")
     upload_dataset_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID. Required if providing --aes-key.")
     upload_dataset_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
+    upload_dataset_parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode.')
+
 
     validate_dataset_parser = subparsers.add_parser('validate-dataset', 
     help='Validates an existing dataset. Returns array of missing files.',  
     description='Validates an existing dataset. Returns array of missing files.\n\n'
                 'Examples:\n'
                 '  Validate a dataset [recommended]:\n'
-                '    sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID\n\n'
+                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID\n\n'
                 '  Validate a dataset with a custom dataset ID:\n'
-                '    sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --dataset-id DATASET_ID\n\n'
+                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --dataset-id DATASET_ID\n\n'
                 '  Validate a dataset with an existing connection:\n'
-                '    sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
     validate_dataset_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     validate_dataset_parser.add_argument('--dataset-id', type=str, required=False, help="Base64 dataset ID. Default is same as order ID.")
     validate_dataset_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID. Required if providing --aes-key.")
     validate_dataset_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
+    validate_dataset_parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode.')
+
 
     run_job_parser = subparsers.add_parser('run-job', 
     help='Executes a Neuropacs order. Returns a status code.',
@@ -146,6 +150,7 @@ def main():
         aes_key = args.aes_key
         dataset_id = args.dataset_id
         order_id = args.order_id
+        verbose = args.verbose
         npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         if connection_id and aes_key :
             npcs.connection_id = connection_id
@@ -153,15 +158,22 @@ def main():
         else:  
             npcs.connect()
         if dataset_id is not None: # With custom dataset ID
-            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=dataset_id, callback=lambda data: print(data))
+            if verbose: # Verbose
+                upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=dataset_id, callback=lambda data: print(data))
+            else:
+                upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=dataset_id)
         else:   # Default
-            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=order_id, callback=lambda data: print(data))
+            if verbose: # Verbose
+                upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=order_id, callback=lambda data: print(data))
+            else:
+                upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=order_id)
         print(upload_status)
     elif args.command == "validate-dataset":
         connection_id = args.connection_id
         aes_key = args.aes_key
         dataset_id = args.dataset_id
         order_id = args.order_id
+        verbose = args.verbose
         npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
@@ -169,9 +181,17 @@ def main():
         else:  
             npcs.connect()
         if dataset_id is not None: # With custom dataset ID
-            validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=dataset_id, callback=lambda data: print(data))
+            if verbose: # Verbose
+                validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=dataset_id, callback=lambda data: print(data))
+            else:
+                validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=dataset_id)
         else: # Default
-            validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=order_id, callback=lambda data: print(data))
+            if verbose: #Verbose
+                validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=order_id, callback=lambda data: print(data))
+            else:
+                validation_results = npcs.validate_upload(directory="/data", order_id=order_id, dataset_id=order_id)
+
+
         print(validation_results)
     elif args.command == "run-job":
         connection_id = args.connection_id
