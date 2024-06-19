@@ -49,7 +49,7 @@ Example: Create a neuropacs connection [recommended]:
 sudo docker run --rm neuropacs connect
 ```
 
-### Create a new order (returns an order ID)
+### Creates a Neuropacs order. Returns a unique order ID.
 
 Example: Create a new order [recommended]:
 
@@ -63,7 +63,7 @@ Example: Create a new order using an existing connection:
 sudo docker run --rm neuropacs new-job --connection-id CONNECTION_ID --aes-key AES_KEY
 ```
 
-### Upload a dataset (returns a status code)
+### Uploads a dataset. Returns upload status code.
 
 Example: Upload a dataset [recommended]:
 
