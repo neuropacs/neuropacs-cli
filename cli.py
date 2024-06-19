@@ -13,7 +13,14 @@ def main():
     parser = argparse.ArgumentParser(description="Neuropacs CLI tool.")
     subparsers = parser.add_subparsers(dest='command', required=True, help='Neuropacs sub-command help')
 
-    # connect_parser = subparsers.add_parser('connect', help='Creates a new session with Neuropacs.')
+    subparsers.add_parser('connect', 
+    help='Creates a new session with Neuropacs.',
+    description='Creates a new session with Neuropacs.\n\n'
+                'Examples:\n'
+                '  Create a new session [recommended]:\n'
+                '    sudo docker run --rm neuropacs connect\n\n',
+                formatter_class=argparse.RawTextHelpFormatter,
+                usage=argparse.SUPPRESS)
 
     new_job_parser = subparsers.add_parser('new-job', 
     help='Creates a Neuropacs order. Returns a unique order ID.',
