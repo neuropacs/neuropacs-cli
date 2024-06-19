@@ -40,13 +40,13 @@ def main():
     description='Uploads a dataset. Returns upload status code.\n\n'
                 'Examples:\n'
                 '  Upload a dataset [recommended]:\n'
-                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data neuropacs upload-dataset --order-id ORDER_ID\n\n'
+                '    sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset --order-id ORDER_ID\n\n'
                 '  Upload a dataset in verbose mode:\n'
-                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data neuropacs upload-dataset -v --order-id ORDER_ID\n\n'
+                '    sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset -v --order-id ORDER_ID\n\n'
                 '  Upload a dataset with a custom dataset ID:\n'
-                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --dataset-id DATASET_ID\n\n'
+                '    sudo docker run --rm -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --dataset-id DATASET_ID\n\n'
                 '  Upload a dataset with an existing connection:\n'
-                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+                '    sudo docker run --rm -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
     upload_dataset_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
@@ -61,13 +61,13 @@ def main():
     description='Validates an existing dataset. Returns array of missing files.\n\n'
                 'Examples:\n'
                 '  Validate a dataset [recommended]:\n'
-                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID\n\n'
+                '    sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID\n\n'
                 '  Validate a dataset in verbose mode:\n'
-                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data validate-dataset -v --order-id ORDER_ID\n\n'
+                '    sudo docker run --rm -v /path/to/dataset/:/data validate-dataset -v --order-id ORDER_ID\n\n'
                 '  Validate a dataset with a custom dataset ID:\n'
-                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --dataset-id DATASET_ID\n\n'
+                '    sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --dataset-id DATASET_ID\n\n'
                 '  Validate a dataset with an existing connection:\n'
-                '    sudo docker run --rm neuropacs -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+                '    sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
     validate_dataset_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
