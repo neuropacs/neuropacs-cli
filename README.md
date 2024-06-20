@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Build the image:
 
-#### Option 1: Pull the neuropacs-cli repository and build from the Dockerfile
+#### Pull the neuropacs-cli repository and build from the Dockerfile
 
 1. Pull the neuropacs-cli repository
    Note: Git is required for this option
@@ -105,38 +105,6 @@ sudo docker run --rm -v /path/to/dataset/:/data upload-dataset --order-id ORDER_
 
 ```bash
 sudo docker run --rm neuropacs upload-dataset  -h
-```
-
-### Validates an existing dataset. Returns array of missing files.
-
-- Example: Validate a dataset [recommended]:
-
-```bash
-sudo docker run --rm -v /path/to/dataset/:/data neuropacs validate-dataset --order-id ORDER_ID
-```
-
-- Example: Validate a dataset in verbose mode:
-
-```bash
-sudo docker run --rm -v /path/to/dataset/:/data neuropacs validate-dataset -v --order-id ORDER_ID
-```
-
-- Example: Validate a dataset with a custom dataset ID:
-
-```bash
-sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --dataset-id DATASET_ID
-```
-
-- Example: Validate a dataset with an existing connection:
-
-```bash
-sudo docker run --rm -v /path/to/dataset/:/data validate-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
-```
-
-- View help menu:
-
-```bash
-sudo docker run --rm neuropacs validate-dataset  -h
 ```
 
 ### Executes a Neuropacs order. Returns a status code.
