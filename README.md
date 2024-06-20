@@ -16,6 +16,7 @@ This repository provides a CLI for the neuropacs™ project via a Docker contain
 #### Pull the neuropacs-cli repository and build from the Dockerfile
 
 1. Pull the neuropacs-cli repository
+
    Note: Git is required
 
 ```bash
@@ -29,6 +30,7 @@ cd neuropacs-cli/
 ```
 
 3. Build the image
+
    Note: Use the URL and API key provided by neuropacs™
 
 ```bash
