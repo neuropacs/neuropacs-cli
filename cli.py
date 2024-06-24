@@ -17,7 +17,7 @@ def main():
     help='Creates a new session with Neuropacs. Returns connection JSON.',
     description='Creates a new session with Neuropacs. Returns connection JSON.\n\n'
                 'Examples:\n'
-                '  Create a new session [recommended]:\n'/
+                '  Create a new session [recommended]:\n'
                 '    sudo docker run --rm neuropacs connect\n\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
@@ -101,7 +101,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == "connect":
-        npcs = neuropacs.init(server_url=server_url, api_key=api_key)
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key, origin_type="CLI")
         conn = npcs.connect()
         print(conn)
     elif args.command == "new-job":
