@@ -128,9 +128,9 @@ def main():
             npcs.connect()
 
         if verbose: # Verbose
-            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, callback=lambda data: print(data))
+            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=order_id, callback=lambda data: print(data))
         else:
-            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id)
+            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=order_id)
         print(upload_status)
     elif args.command == "run-job":
         connection_id = args.connection_id
