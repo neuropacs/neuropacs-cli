@@ -91,12 +91,6 @@ sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset --order
 sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset -v --order-id ORDER_ID
 ```
 
-- Example: Upload a dataset with a custom dataset ID:
-
-```bash
-sudo docker run --rm -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --dataset-id DATASET_ID
-```
-
 - Example: Upload a dataset with an existing connection:
 
 ```bash
@@ -119,12 +113,6 @@ NOTE: To use the current PD vs MSP diagnostic pipeline, use "PD/MSA/PSP-v1.0" fo
 sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID
 ```
 
-- Example: Execute an order with a custom dataset ID:
-
-```bash
-sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID --dataset-id DATASET_ID
-```
-
 - Example: Execute an order using an existing connection:
 
 ```bash
@@ -143,12 +131,6 @@ sudo docker run --rm neuropacs run-job  -h
 
 ```bash
 sudo docker run --rm neuropacs check-status --order-id ORDER_ID
-```
-
-- Example: Check order status with a custom dataset ID:
-
-```bash
-sudo docker run --rm neuropacs check-status --order-id ORDER_ID --dataset-id DATASET_ID
 ```
 
 - Example: Check order status using an existing connection:
@@ -171,12 +153,6 @@ NOTE: Available formats: TXT, JSON, XML, PNG
 
 ```bash
 sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID
-```
-
-- Example: Retrieves results with a custom dataset ID:
-
-```bash
-sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID --dataset-id DATASET_ID
 ```
 
 - Example: Retrieves results using an existing connection:
