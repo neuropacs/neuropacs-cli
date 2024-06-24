@@ -10,12 +10,12 @@ def main():
     api_key = os.getenv('API_KEY')
     # client = "api"
 
-    parser = argparse.ArgumentParser(description="Neuropacs CLI tool.")
-    subparsers = parser.add_subparsers(dest='command', required=True, help='Neuropacs sub-command help')
+    parser = argparse.ArgumentParser(description="neuropacs™ CLI tool.")
+    subparsers = parser.add_subparsers(dest='command', required=True, help='neuropacs™ sub-command help')
 
     subparsers.add_parser('connect', 
-    help='Creates a new session with Neuropacs. Returns connection JSON.',
-    description='Creates a new session with Neuropacs. Returns connection JSON.\n\n'
+    help='Creates a new session with neuropacs™. Returns connection JSON.',
+    description='Creates a new session with neuropacs™. Returns connection JSON.\n\n'
                 'Examples:\n'
                 '  Create a new session [recommended]:\n'
                 '    sudo docker run --rm neuropacs connect\n\n',
@@ -23,8 +23,8 @@ def main():
                 usage=argparse.SUPPRESS)
 
     new_job_parser = subparsers.add_parser('new-job', 
-    help='Creates a Neuropacs order. Returns a unique order ID.',
-    description='Creates a Neuropacs order. Returns a unique order ID.\n\n'
+    help='Creates a neuropacs™ order. Returns a unique order ID.',
+    description='Creates a neuropacs™ order. Returns a unique order ID.\n\n'
                 'Examples:\n'
                 '  Create a new order [recommended]:\n'
                 '    sudo docker run --rm neuropacs new-job\n\n'
@@ -53,8 +53,8 @@ def main():
     upload_dataset_parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode.')
     
     run_job_parser = subparsers.add_parser('run-job', 
-    help='Executes a Neuropacs order. Returns a status code.',
-    description='Executes a Neuropacs order. Returns a status code.\n'
+    help='Executes a neuropacs™ order. Returns a status code.',
+    description='Executes a neuropacs™ order. Returns a status code.\n'
             'Available product-id(s): PD/MSA/PSP-v1.0\n\n'
             'Examples:\n'
             '  Execute an order [recommended]:\n'
@@ -63,14 +63,14 @@ def main():
             '    sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
             formatter_class=argparse.RawTextHelpFormatter,
             usage=argparse.SUPPRESS)
-    run_job_parser.add_argument('--product-id', type=str, required=True, help="Neuropacs product to be executed. ")
+    run_job_parser.add_argument('--product-name', type=str, required=True, help="Neuropacs product to be executed. ")
     run_job_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     run_job_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID. Required if providing --aes-key.")
     run_job_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
 
     check_status_parser = subparsers.add_parser('check-status', 
-    help='Retrieves current status of a running Neuropacs order. Return status JSON.',
-    description='Retrieves current status of a running Neuropacs order. Return status JSON.\n\n'
+    help='Retrieves current status of a running neuropacs™ order. Return status JSON.',
+    description='Retrieves current status of a running neuropacs™ order. Return status JSON.\n\n'
         'Examples:\n'
         '  Check order status [recommended]:\n'
         '    sudo docker run --rm neuropacs check-status --order-id ORDER_ID\n\n'
@@ -83,8 +83,8 @@ def main():
     check_status_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
     
     get_results_parser = subparsers.add_parser('get-results', 
-    help='Retrieves results from completed Neuropacs order. Return result in specified format.',
-    description='Retrieves current status of a running Neuropacs order.\n'
+    help='Retrieves results from completed neuropacs™ order. Return result in specified format.',
+    description='Retrieves current status of a running neuropacs™ order.\n'
         'Available formats: TXT, JSON, XML, PNG\n\n'
         'Examples:\n'
         '  Retrieves results [recommended]:\n'
@@ -135,7 +135,7 @@ def main():
     elif args.command == "run-job":
         connection_id = args.connection_id
         aes_key = args.aes_key
-        product_id = args.product_id
+        product_name = args.product_name
         order_id = args.order_id
         npcs = neuropacs.init(server_url=server_url, api_key=api_key, origin_type="CLI")
         if (connection_id is not None) and (aes_key is not None) :
@@ -144,7 +144,7 @@ def main():
         else:  
             npcs.connect()
 
-        job = npcs.run_job(product_id=product_id, order_id=order_id)
+        job = npcs.run_job(product_name=product_name, order_id=order_id)
         print(job)
     elif args.command == "check-status":
         connection_id = args.connection_id
