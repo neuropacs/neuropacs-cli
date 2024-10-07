@@ -146,7 +146,7 @@ def main():
         else:  
             npcs.connect()
 
-        job = npcs.run_job(product_id=product, order_id=order_id)
+        job = npcs.run_job(product_name=product, order_id=order_id)
         print(job)
     elif args.command == "check-status":
         connection_id = args.connection_id
