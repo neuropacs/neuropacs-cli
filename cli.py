@@ -113,6 +113,7 @@ def main():
             npcs.aes_key = aes_key
         else:  
             npcs.connect()
+
         order = npcs.new_job()
         print(order) # Print UUIDv4 order ID
     elif args.command == "upload-dataset":
