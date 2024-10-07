@@ -103,7 +103,7 @@ def main():
     if args.command == "connect":
         npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         conn = npcs.connect()
-        print(conn)
+        print(conn) # Print connection object
     elif args.command == "new-job":
         connection_id = args.connection_id
         aes_key = args.aes_key
@@ -114,7 +114,7 @@ def main():
         else:  
             npcs.connect()
         order = npcs.new_job()
-        print(order)
+        print(order) # Print UUIDv4 order ID
     elif args.command == "upload-dataset":
         connection_id = args.connection_id
         aes_key = args.aes_key
@@ -131,6 +131,7 @@ def main():
             upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, callback=lambda data: print(data))
         else:
             upload_status = npcs.upload_dataset(directory="/data", order_id=order_id)
+
         print(upload_status)
     elif args.command == "run-job":
         connection_id = args.connection_id
