@@ -105,18 +105,18 @@ sudo docker run --rm neuropacs upload-dataset  -h
 
 ### Executes a neuropacs™ order. Returns a status code.
 
-NOTE: To use the current PD vs MSP diagnostic pipeline, use "PD/MSA/PSP-v1.0" for --product-id
+NOTE: To use the current PD vs MSP diagnostic pipeline, use "PD/MSA/PSP-v1.0" for --product
 
 - Example: Executes an order [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID
+sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID
 ```
 
 - Example: Execute an order using an existing connection:
 
 ```bash
-sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
 ```
 
 - View help menu:

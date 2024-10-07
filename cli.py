@@ -55,15 +55,15 @@ def main():
     run_job_parser = subparsers.add_parser('run-job', 
     help='Executes a Neuropacs order. Returns a status code.',
     description='Executes a Neuropacs order. Returns a status code.\n'
-            'Available product-id(s): PD/MSA/PSP-v1.0\n\n'
+            'Available product(s): PD/MSA/PSP-v1.0\n\n'
             'Examples:\n'
             '  Execute an order [recommended]:\n'
-            '    sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID\n\n'
+            '    sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID\n\n'
             '  Execute an order using an existing connection:\n'
-            '    sudo docker run --rm neuropacs run-job --product-id PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+            '    sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
             formatter_class=argparse.RawTextHelpFormatter,
             usage=argparse.SUPPRESS)
-    run_job_parser.add_argument('--product-id', type=str, required=True, help="Neuropacs product to be executed. ")
+    run_job_parser.add_argument('--product', type=str, required=True, help="Neuropacs product to be executed.")
     run_job_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     run_job_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID. Required if providing --aes-key.")
     run_job_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
@@ -137,7 +137,7 @@ def main():
     elif args.command == "run-job":
         connection_id = args.connection_id
         aes_key = args.aes_key
-        product_id = args.product_id
+        product = args.product
         order_id = args.order_id
         npcs = neuropacs.init(server_url=server_url, api_key=api_key)
         if (connection_id is not None) and (aes_key is not None) :
@@ -146,7 +146,7 @@ def main():
         else:  
             npcs.connect()
 
-        job = npcs.run_job(product_id=product_id, order_id=order_id)
+        job = npcs.run_job(product_id=product, order_id=order_id)
         print(job)
     elif args.command == "check-status":
         connection_id = args.connection_id
