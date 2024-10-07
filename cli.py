@@ -113,6 +113,7 @@ def main():
             npcs.aes_key = aes_key
         else:  
             npcs.connect()
+
         order = npcs.new_job()
         print(order) # Print UUIDv4 order ID
     elif args.command == "upload-dataset":
@@ -130,7 +131,7 @@ def main():
         if verbose: # Verbose
             upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=order_id, callback=lambda data: print(data))
         else:
-            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id)
+            upload_status = npcs.upload_dataset(directory="/data", order_id=order_id, dataset_id=order_id)
 
         print(upload_status)
     elif args.command == "run-job":
