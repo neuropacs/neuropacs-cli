@@ -53,15 +53,9 @@ def main():
     upload_dataset_parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode.')
     
     run_job_parser = subparsers.add_parser('run-job', 
-<<<<<<< HEAD
-    help='Executes a neuropacs™ order. Returns a status code.',
-    description='Executes a neuropacs™ order. Returns a status code.\n'
-            'Available product-id(s): PD/MSA/PSP-v1.0\n\n'
-=======
     help='Executes a Neuropacs order. Returns a status code.',
     description='Executes a Neuropacs order. Returns a status code.\n'
             'Available product(s): PD/MSA/PSP-v1.0\n\n'
->>>>>>> version/1.0.0
             'Examples:\n'
             '  Execute an order [recommended]:\n'
             '    sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID\n\n'
@@ -69,11 +63,7 @@ def main():
             '    sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
             formatter_class=argparse.RawTextHelpFormatter,
             usage=argparse.SUPPRESS)
-<<<<<<< HEAD
-    run_job_parser.add_argument('--product-name', type=str, required=True, help="Neuropacs product to be executed. ")
-=======
     run_job_parser.add_argument('--product', type=str, required=True, help="Neuropacs product to be executed.")
->>>>>>> version/1.0.0
     run_job_parser.add_argument('--order-id', type=str, required=True, help="Base64 order ID.")
     run_job_parser.add_argument('--connection-id', type=str, required=False, help="Base64 connection ID. Required if providing --aes-key.")
     run_job_parser.add_argument('--aes-key', type=str, required=False, help="Base64 connection ID. Required if providing --connection-id.")
