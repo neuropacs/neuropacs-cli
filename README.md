@@ -1,3 +1,5 @@
+![CodeQL](https://github.com/neuropacs/neuropacs-cli/actions/workflows/codeql-analysis.yml/badge.svg)
+
 # neuropacs™ CLI
 
 This repository provides a CLI for the neuropacs™ project via a Docker container.
