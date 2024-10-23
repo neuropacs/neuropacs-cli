@@ -55,7 +55,7 @@ def main():
     run_job_parser = subparsers.add_parser('run-job', 
     help='Executes a Neuropacs order. Returns a status code.',
     description='Executes a Neuropacs order. Returns a status code.\n'
-            'Available product(s): PD/MSA/PSP-v1.0\n\n'
+            'Available product(s): Atypical/MSAp/PSP-v1.0\n\n'
             'Examples:\n'
             '  Execute an order [recommended]:\n'
             '    sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID\n\n'

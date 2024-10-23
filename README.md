@@ -107,7 +107,7 @@ sudo docker run --rm neuropacs upload-dataset  -h
 
 ### Executes a neuropacs™ order. Returns a status code.
 
-NOTE: To use the current PD vs MSP diagnostic pipeline, use "PD/MSA/PSP-v1.0" for --product
+NOTE: To use the current PD vs MSP diagnostic pipeline, use "Atypical/MSAp/PSP-v1.0" for --product
 
 - Example: Executes an order [recommended]:
 
