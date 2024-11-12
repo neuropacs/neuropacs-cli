@@ -24,6 +24,7 @@
         <li><a href="https://neuropacs.github.io/">Home</a></li>
         <li><a href="#installation">Installation</a></li>
         <li><a href="#usage">Usage</a></li>
+        <li><a href="#dicom-web">DICOMweb</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#license">License</a></li>
         <li><a href="#explore">Explore</a></li>
@@ -78,38 +79,54 @@
     cd /path/to/neuropacs-cli/
 
     <span class="code-comment"># Build the Docker image from the Dockerfile</span>
-    sudo docker build . --no-cache --build-arg server_url=SERVER_URL --build-arg api_key=API_KEY -t neuropacs
+    docker build . --no-cache --build-arg server_url=SERVER_URL --build-arg api_key=API_KEY -t neuropacs
         </code></pre>
       </section>
 
       <section id="usage">
         <h2>Usage</h2>
-        <h3>Example</h3>
-        <pre class="code-container"><code class="language-shell">
+        
+        <div class="code-section">
+          <h3>Example</h3>
+          <p>Working example using the neuropacs™ CLI.</p>
+          <pre class="code-container"><code class="language-shell">
     <span class="code-comment"># Create a session</span>
-    sudo docker run --rm neuropacs connect
+    docker run --rm neuropacs <span class="code-keyword">connect</span>
 
     <span class="code-comment"># Create a new order</span>
-    sudo docker run --rm neuropacs new-job
+    docker run --rm neuropacs <span class="code-keyword">new-job</span>
 
-    <span class="code-comment"># Upload a dataset (Hint: use '-v' flag for verbose mode)</span>
-    sudo docker run --rm -v <span class="code-string">/path/to/dataset/</span>:/data neuropacs upload-dataset <span class="code-function">(-v)</span> --order-id ORDER_ID
+    <span class="code-comment"># Upload a dataset via path (hint: use '-v' flag for verbose mode)</span>
+    docker run --rm -v <span class="code-string">/local/path/to/dataset/</span>:/data neuropacs <span class="code-keyword">upload-dataset-from-path</span> <span class="code-function">(-v)</span> --order-id ORDER_ID
 
     <span class="code-comment"># Start an order</span>
-    sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID
+    docker run --rm neuropacs <span class="code-keyword">run-job</span> --product PRODUCT_ID --order-id ORDER_ID
 
     <span class="code-comment"># Check order status</span>
-    sudo docker run --rm neuropacs check-status --order-id ORDER_ID
+    docker run --rm neuropacs <span class="code-keyword">check-status</span> --order-id ORDER_ID
 
     <span class="code-comment"># Retrieve job results</span>
-    sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID
-
+    docker run --rm neuropacs <span class="code-keyword">get-results</span> --format FORMAT --order-id ORDER_ID
+        </div>
         </code></pre>
+      <section id="dicom-web">
+        <div class="code-section">
+          <h3>DICOMweb Integration</h2>
+          <p>The API retrieves and processes images directly from DICOMweb-compliant servers, enabling neuropacs™ analysis for streamlined diagnostic workflows.</p>
+          <pre class="code-container"><code class="language-shell">
+    <span class="code-comment"># Upload a dataset via DICOMweb-compliant server (hint: use '-v' flag for verbose mode)</span>
+    docker run --rm neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(-v)</span> --order-id ORDER_ID --dicom-web-base-url DICOM_WEB_BASE_URL --study-uid STUDY_UID
+
+    <span class="code-comment"># If you DICOMweb server is hosted locally, replace "localhost" with "host.docker.internal".</span>
+    <span class="code-comment"># Ex. "http://localhost:8080/dcm4chee-arc/aets/DCM4CHEE/rs" -> "http://host.docker.internal:8080/dcm4chee-arc/aets/DCM4CHEE/rs"</span>
+        </code></pre>
+        </div>
       </section>
       <p>
         Note: To view the help screen of any command, use the '-h' or '--help'
         flag (ex. sudo docker run --rm neuropacs connect -h).
       </p>
+      </section>
 
       <section id="contact">
         <h2>Contact</h2>
@@ -143,7 +160,9 @@
           <li>
             <a href="https://neuropacs.github.io/SlicerNeuropacs/">3D Slicer</a>
           </li>
-          <!-- <li><a href="weasis.html">Weasis DICOM Viewer</a></li> -->
+          <li>
+            <a href="#dicom-web">DICOMweb</a>
+          </li>
         </ul>
         <h3>Supported Programming Languages</h3>
         <p>
