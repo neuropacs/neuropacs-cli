@@ -114,16 +114,19 @@
           <h3>DICOMweb Integration</h2>
           <p>The API retrieves and processes images directly from DICOMweb-compliant servers, enabling neuropacs™ analysis for streamlined diagnostic workflows.</p>
           <pre class="code-container"><code class="language-shell">
-    <span class="code-comment"># Upload a dataset via DICOMweb-compliant server (hint: use '-v' flag for verbose mode)</span>
+    <span class="code-comment"># Upload a dataset via DICOMweb-compliant server w/ credentials (hint: use '-v' flag for verbose mode)</span>
+    docker run --rm neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(-v)</span> --order-id ORDER_ID --dicom-web-base-url DICOM_WEB_BASE_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD
+
+    <span class="code-comment"># Upload a dataset via DICOMweb-compliant server w/out credentials (hint: use '-v' flag for verbose mode)</span>
     docker run --rm neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(-v)</span> --order-id ORDER_ID --dicom-web-base-url DICOM_WEB_BASE_URL --study-uid STUDY_UID
 
-    <span class="code-comment"># If you DICOMweb server is hosted locally, replace "localhost" with "host.docker.internal".</span>
-    <span class="code-comment"># Ex. "http://localhost:8080/dcm4chee-arc/aets/DCM4CHEE/rs" -> "http://host.docker.internal:8080/dcm4chee-arc/aets/DCM4CHEE/rs"</span>
+    <span class="code-comment"># NOTE: If you DICOMweb server is hosted locally, replace "localhost" with "host.docker.internal".</span>
+    <span class="code-comment">     # Ex. "http://localhost:8080/dcm4chee-arc/aets/DCM4CHEE/rs" -> "http://host.docker.internal:8080/dcm4chee-arc/aets/DCM4CHEE/rs"</span>
         </code></pre>
         </div>
       </section>
       <p>
-        Note: To view the help screen of any command, use the '-h' or '--help'
+        NOTE: To view the help screen of any command, use the '-h' or '--help'
         flag (ex. sudo docker run --rm neuropacs connect -h).
       </p>
       </section>
