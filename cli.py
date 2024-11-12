@@ -18,7 +18,7 @@ def main():
     description='Creates a new session with neuropacs™. Returns connection JSON.\n\n'
                 'Examples:\n'
                 '  Create a new session:\n'
-                '    sudo docker run --rm neuropacs connect\n\n',
+                '     docker run --rm neuropacs connect\n\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
 
@@ -27,9 +27,9 @@ def main():
     description='Creates a neuropacs™ order. Returns a unique order ID.\n\n'
                 'Examples:\n'
                 '  Create a new order:\n'
-                '    sudo docker run --rm neuropacs new-job\n\n'
+                '     docker run --rm neuropacs new-job\n\n'
                 '  Create a new order using an existing connection:\n'
-                '    sudo docker run --rm neuropacs new-job --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+                '     docker run --rm neuropacs new-job --connection-id CONNECTION_ID --aes-key AES_KEY\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
     new_job_parser.add_argument('--connection-id', type=str, required=False, help="Unique base64 connection ID associated with session. Required if providing --aes-key.")
@@ -40,11 +40,11 @@ def main():
     description='Uploads a dataset from a local path (ex. "/path/to/dataset"). Returns upload status.\n\n'
                 'Examples:\n'
                 '  Upload a dataset:\n'
-                '    sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset-from-path --order-id ORDER_ID\n\n'
+                '     docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset-from-path --order-id ORDER_ID\n\n'
                 '  Upload a dataset in verbose mode:\n'
-                '    sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset-from-path -v --order-id ORDER_ID\n\n'
+                '     docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset-from-path -v --order-id ORDER_ID\n\n'
                 '  Upload a dataset with an existing connection:\n'
-                '    sudo docker run --rm -v /path/to/dataset/:/data upload-dataset-from-path --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+                '     docker run --rm -v /path/to/dataset/:/data upload-dataset-from-path --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
     upload_dataset_from_path_parser.add_argument('--order-id', type=str, required=True, help="Unique base64 identifier for the order.")
@@ -57,13 +57,13 @@ def main():
     description='Uploads a dataset from DICOMweb-compliant server via a base URL and studyUid w/ optional credentials (basic auth). Returns upload status.\n\n'
                 'Examples:\n'
                 '  Upload a dataset:\n'
-                '    sudo docker run --rm neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID\n\n'
+                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID\n\n'
                 '  Upload a dataset w/ credentials:\n'
-                '    sudo docker run --rm neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD\n\n'
+                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD\n\n'
                 '  Upload a dataset in verbose mode:\n'
-                '    sudo docker run --rm neuropacs upload-dataset-from-dicom-web -v --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID\n\n'
+                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web -v --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID\n\n'
                 '  Upload a dataset with an existing connection:\n'
-                '    sudo docker run --rm upload-dataset-from-dicom-web --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+                '    docker run --rm --network host upload-dataset-from-dicom-web --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
     upload_dataset_from_path_dicom_web.add_argument('--order-id', type=str, required=True, help="Unique base64 identifier for the order.")
@@ -81,9 +81,9 @@ def main():
             'Available product(s): Atypical/MSAp/PSP-v1.0\n\n'
             'Examples:\n'
             '  Execute an order:\n'
-            '    sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID\n\n'
+            '     docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID\n\n'
             '  Execute an order using an existing connection:\n'
-            '    sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+            '     docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
             formatter_class=argparse.RawTextHelpFormatter,
             usage=argparse.SUPPRESS)
     run_job_parser.add_argument('--product', type=str, required=True, help="Neuropacs product to be executed.")
@@ -96,9 +96,9 @@ def main():
     description='Retrieves current status of a running neuropacs™ order. Return status JSON.\n\n'
         'Examples:\n'
         '  Check order status:\n'
-        '    sudo docker run --rm neuropacs check-status --order-id ORDER_ID\n\n'
+        '     docker run --rm neuropacs check-status --order-id ORDER_ID\n\n'
         '  Check order status using an existing connection:\n'
-        '    sudo docker run --rm neuropacs check-status --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+        '     docker run --rm neuropacs check-status --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
         formatter_class=argparse.RawTextHelpFormatter,
         usage=argparse.SUPPRESS)
     check_status_parser.add_argument('--order-id', type=str, required=True, help="Unique base64 identifier for the order.")
@@ -111,9 +111,9 @@ def main():
         'Available formats: TXT, JSON, XML, PNG\n\n'
         'Examples:\n'
         '  Retrieves results [recommended]:\n'
-        '    sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID\n\n'
+        '     docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID\n\n'
         '  Retrieves results using an existing connection:\n'
-        '    sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+        '     docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
         formatter_class=argparse.RawTextHelpFormatter,
         usage=argparse.SUPPRESS)
     get_results_parser.add_argument('--format', type=str, required=True, help="Format of result file. ['TXT', 'XML', 'JSON', 'PNG']")
@@ -146,6 +146,7 @@ def main():
         aes_key = args.aes_key
         order_id = args.order_id
         verbose = args.verbose
+
         npcs = neuropacs.init(server_url=server_url, api_key=api_key, origin_type="CLI")
         if connection_id and aes_key :
             npcs.connection_id = connection_id
