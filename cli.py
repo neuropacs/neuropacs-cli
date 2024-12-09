@@ -61,13 +61,13 @@ def main():
     description='Uploads a dataset from DICOMweb-compliant server via a base URL and studyUid w/ optional credentials (basic auth). Returns upload status.\n\n'
                 'Examples:\n'
                 '  Upload a dataset:\n'
-                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID\n\n'
+                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url WADO_URL --study-uid STUDY_UID\n\n'
                 '  Upload a dataset w/ credentials:\n'
-                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD\n\n'
+                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url WADO_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD\n\n'
                 '  Upload a dataset in verbose mode:\n'
-                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web -v --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID\n\n'
+                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web -v --order-id ORDER_ID --wado_url WADO_URL --study-uid STUDY_UID\n\n'
                 '  Upload a dataset with an existing connection:\n'
-                '    docker run --rm --network host upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+                '    docker run --rm --network host upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url WADO_URL --study-uid STUDY_UID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
     upload_dataset_from_dicom_web.add_argument('--order-id', type=str, required=True, help="Unique base64 identifier for the order.")
