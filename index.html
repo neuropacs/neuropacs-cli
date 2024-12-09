@@ -100,13 +100,13 @@
     docker run --rm -v <span class="code-string">/local/path/to/dataset/</span>:/data neuropacs <span class="code-keyword">upload-dataset-from-path</span> <span class="code-function">(-v)</span> --order-id ORDER_ID
 
     <span class="code-comment"># Start an order</span>
-    docker run --rm neuropacs <span class="code-keyword">run-job</span> --product PRODUCT_ID --order-id ORDER_ID
+    docker run --rm neuropacs <span class="code-keyword">run-job</span> --order-id ORDER_ID --product PRODUCT_ID 
 
     <span class="code-comment"># Check order status</span>
     docker run --rm neuropacs <span class="code-keyword">check-status</span> --order-id ORDER_ID
 
     <span class="code-comment"># Retrieve job results</span>
-    docker run --rm neuropacs <span class="code-keyword">get-results</span> --format FORMAT --order-id ORDER_ID
+    docker run --rm neuropacs <span class="code-keyword">get-results</span> --order-id ORDER_ID --format FORMAT 
         </div>
         </code></pre>
       <section id="dicom-web">
@@ -115,10 +115,10 @@
           <p>The API retrieves and processes images directly from DICOMweb-compliant servers, enabling neuropacs™ analysis for streamlined diagnostic workflows.</p>
           <pre class="code-container"><code class="language-shell">
     <span class="code-comment"># Upload a dataset via DICOMweb-compliant server w/ credentials (hint: use '-v' flag for verbose mode)</span>
-    docker run --rm neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(-v)</span> --order-id ORDER_ID --dicom-web-base-url DICOM_WEB_BASE_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD
+    docker run --rm neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(-v)</span> --order-id ORDER_ID --wado-url WADO_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD
 
     <span class="code-comment"># Upload a dataset via DICOMweb-compliant server w/out credentials (hint: use '-v' flag for verbose mode)</span>
-    docker run --rm neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(-v)</span> --order-id ORDER_ID --dicom-web-base-url DICOM_WEB_BASE_URL --study-uid STUDY_UID
+    docker run --rm neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(-v)</span> --order-id ORDER_ID --wado-url WADO_URL --study-uid STUDY_UID
 
     <span class="code-comment"># NOTE: If you DICOMweb server is hosted locally, replace "localhost" with "host.docker.internal".</span>
     <span class="code-comment">     # Ex. "http://localhost:8080/dcm4chee-arc/aets/DCM4CHEE/rs" -> "http://host.docker.internal:8080/dcm4chee-arc/aets/DCM4CHEE/rs"</span>
