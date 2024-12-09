@@ -1,3 +1,7 @@
+# neuropacs CLI v1.0.2
+# (c) 2024 neuropacs
+# Released under the MIT License.
+
 import argparse
 import os
 import neuropacs
@@ -52,28 +56,28 @@ def main():
     upload_dataset_from_path_parser.add_argument('--aes-key', type=str, required=False, help="Unique base64 AES key associated with the provided connection ID. Required if providing --connection-id.")
     upload_dataset_from_path_parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode.')
 
-    upload_dataset_from_path_dicom_web = subparsers.add_parser('upload-dataset-from-dicom-web', 
-    help='Uploads a dataset from DICOMweb-compliant server. Returns upload status.',
+    upload_dataset_from_dicom_web = subparsers.add_parser('upload-dataset-from-dicom-web', 
+    help='Upload a dataset via DICOMweb WADO-RS protocol. Returns upload status.',
     description='Uploads a dataset from DICOMweb-compliant server via a base URL and studyUid w/ optional credentials (basic auth). Returns upload status.\n\n'
                 'Examples:\n'
                 '  Upload a dataset:\n'
-                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID\n\n'
+                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID\n\n'
                 '  Upload a dataset w/ credentials:\n'
-                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD\n\n'
+                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD\n\n'
                 '  Upload a dataset in verbose mode:\n'
-                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web -v --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID\n\n'
+                '    docker run --rm --network host neuropacs upload-dataset-from-dicom-web -v --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID\n\n'
                 '  Upload a dataset with an existing connection:\n'
-                '    docker run --rm --network host upload-dataset-from-dicom-web --order-id ORDER_ID --dicom-web-base-url BASE_URL --study-uid STUDY_UID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+                '    docker run --rm --network host upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
                 formatter_class=argparse.RawTextHelpFormatter,
                 usage=argparse.SUPPRESS)
-    upload_dataset_from_path_dicom_web.add_argument('--order-id', type=str, required=True, help="Unique base64 identifier for the order.")
-    upload_dataset_from_path_dicom_web.add_argument('--dicom-web-base-url', type=str, required=True, help="Base URL of the DICOMweb server (e.g., 'http://localhost:8080/dicomweb').")
-    upload_dataset_from_path_dicom_web.add_argument('--study-uid', type=str, required=True, help="Unique Study Instance UID of the study to be retrieved.")
-    upload_dataset_from_path_dicom_web.add_argument('--username', type=str, required=False, help="Username for basic authentication.")
-    upload_dataset_from_path_dicom_web.add_argument('--password', type=str, required=False, help="Password for basic authentication.")
-    upload_dataset_from_path_dicom_web.add_argument('--connection-id', type=str, required=False, help="Unique base64 connection ID associated with session. Required if providing --aes-key.")
-    upload_dataset_from_path_dicom_web.add_argument('--aes-key', type=str, required=False, help="Unique base64 AES key associated with the provided connection ID. Required if providing --connection-id.")
-    upload_dataset_from_path_dicom_web.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode.')
+    upload_dataset_from_dicom_web.add_argument('--order-id', type=str, required=True, help="Unique base64 identifier for the order.")
+    upload_dataset_from_dicom_web.add_argument('--wado_url', type=str, required=True, help="Base URL of the DICOMweb server (e.g., 'http://localhost:8080/dicomweb').")
+    upload_dataset_from_dicom_web.add_argument('--study-uid', type=str, required=True, help="Unique Study Instance UID of the study to be retrieved.")
+    upload_dataset_from_dicom_web.add_argument('--username', type=str, required=False, help="Username for basic authentication.")
+    upload_dataset_from_dicom_web.add_argument('--password', type=str, required=False, help="Password for basic authentication.")
+    upload_dataset_from_dicom_web.add_argument('--connection-id', type=str, required=False, help="Unique base64 connection ID associated with session. Required if providing --aes-key.")
+    upload_dataset_from_dicom_web.add_argument('--aes-key', type=str, required=False, help="Unique base64 AES key associated with the provided connection ID. Required if providing --connection-id.")
+    upload_dataset_from_dicom_web.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode.')
     
     run_job_parser = subparsers.add_parser('run-job', 
     help='Executes a Neuropacs order. Returns a status code.',
@@ -161,7 +165,7 @@ def main():
         print(upload_status)
 
     elif args.command == "upload-dataset-from-dicom-web":
-        dicom_web_base_url = args.dicom_web_base_url
+        wado_url = args.wado_url
         study_uid = args.study_uid
         username = args.username
         password = args.password
@@ -178,14 +182,14 @@ def main():
 
         if(username is not None and password is not None):
             if verbose:
-                upload_status = npcs.upload_dataset_from_dicom_web(order_id=order_id, dicom_web_base_url=dicom_web_base_url, study_uid=study_uid, username=username, password=password, callback=lambda data: print(data))
+                upload_status = npcs.upload_dataset_from_dicom_web(order_id=order_id, wado_url=wado_url, study_uid=study_uid, username=username, password=password, callback=lambda data: print(data))
             else:
-                upload_status = npcs.upload_dataset_from_dicom_web(order_id=order_id, dicom_web_base_url=dicom_web_base_url, study_uid=study_uid, username=username, password=password)
+                upload_status = npcs.upload_dataset_from_dicom_web(order_id=order_id, wado_url=wado_url, study_uid=study_uid, username=username, password=password)
         else:
             if verbose:
-                upload_status = npcs.upload_dataset_from_dicom_web(order_id=order_id, dicom_web_base_url=dicom_web_base_url, study_uid=study_uid, callback=lambda data: print(data))
+                upload_status = npcs.upload_dataset_from_dicom_web(order_id=order_id, wado_url=wado_url, study_uid=study_uid, callback=lambda data: print(data))
             else:
-                upload_status = npcs.upload_dataset_from_dicom_web(order_id=order_id, dicom_web_base_url=dicom_web_base_url, study_uid=study_uid)
+                upload_status = npcs.upload_dataset_from_dicom_web(order_id=order_id, wado_url=wado_url, study_uid=study_uid)
         print(upload_status)
 
     elif args.command == "run-job":
