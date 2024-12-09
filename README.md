@@ -36,27 +36,27 @@ cd neuropacs-cli/
    Note: Use the URL and API key provided by neuropacs™
 
 ```bash
-sudo docker build . --no-cache --build-arg server_url=SERVER_URL --build-arg api_key=API_KEY -t neuropacs
+docker build . --no-cache --build-arg server_url=SERVER_URL --build-arg api_key=API_KEY -t neuropacs
 ```
 
 ## Usage
 
 Hint: To view the help screen of any command, use the '-h' or '--help' option.
 
-### Create a neuropacs™ session. Returns connection JSON.
+### Create a neuropacs™ session. Returns connection JSON string.
 
 NOTE: This is optional. Each command will start a new session unless custom session parameters are specified.
 
 - Example: Create a neuropacs™ session [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs connect
+docker run --rm neuropacs connect
 ```
 
 - View help menu:
 
 ```bash
-sudo docker run --rm neuropacs connect -h
+docker run --rm neuropacs connect -h
 ```
 
 ### Creates a neuropacs™ order. Returns a unique order ID.
@@ -64,39 +64,77 @@ sudo docker run --rm neuropacs connect -h
 - Example: Create a new order [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs new-job
+docker run --rm neuropacs new-job
 ```
 
 - Example: Create a new order using an existing connection:
 
 ```bash
-sudo docker run --rm neuropacs new-job --connection-id CONNECTION_ID --aes-key AES_KEY
+docker run --rm neuropacs new-job --connection-id CONNECTION_ID --aes-key AES_KEY
 ```
 
 - View help menu:
 
 ```bash
-sudo docker run --rm neuropacs new-job -h
+docker run --rm neuropacs new-job -h
 ```
 
-### Uploads a dataset. Returns upload status code.
+### Uploads a dataset from path. Returns upload status.
 
-- Example: Upload a dataset [recommended]:
+- Example: Upload a dataset from path [recommended]:
 
 ```bash
-sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset --order-id ORDER_ID
+docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset-from-path --order-id ORDER_ID
 ```
 
-- Example: Upload a dataset in verbose mode:
+- Example: Upload a dataset from path in verbose mode:
 
 ```bash
-sudo docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset -v --order-id ORDER_ID
+docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset-from-path -v --order-id ORDER_ID
 ```
 
-- Example: Upload a dataset with an existing connection:
+- View help menu:
 
 ```bash
-sudo docker run --rm -v /path/to/dataset/:/data upload-dataset --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+sudo docker run --rm neuropacs upload-dataset  -h
+```
+
+### Uploads a dataset from DICOMweb WADO-RS. Returns upload status.
+
+- Example: Upload a dataset from DICOMweb WADO-RS w/out credentials [recommended]:
+
+```bash
+docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID
+```
+
+- Example: Upload a dataset from DICOMweb WADO-RS w/out credentials in verbose mode:
+
+```bash
+docker run --rm --network host neuropacs upload-dataset-from-dicom-web -v --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID
+```
+
+- Example: Upload a dataset from DICOMweb WADO-RS w/out credentials with an existing connection:
+
+```bash
+docker run --rm --network host upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID --connection-id CONNECTION_ID --aes-key AES_KEY
+```
+
+- Example: Upload a dataset from DICOMweb WADO-RS w/ credentials [recommended]:
+
+```bash
+docker run --rm --network host neuropacs upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD
+```
+
+- Example: Upload a dataset from DICOMweb WADO-RS w/ credentials in verbose mode:
+
+```bash
+docker run --rm --network host neuropacs upload-dataset-from-dicom-web -v --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD
+```
+
+- Example: Upload a dataset from DICOMweb WADO-RS w/ credentials with an existing connection:
+
+```bash
+docker run --rm --network host upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID --connection-id CONNECTION_ID --aes-key AES_KEY --username USERNAME --password PASSWORD
 ```
 
 - View help menu:
@@ -112,13 +150,13 @@ NOTE: To use the current PD vs MSP diagnostic pipeline, use "Atypical/MSAp/PSP-v
 - Example: Executes an order [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID
+sudo docker run --rm neuropacs run-job --order-id ORDER_ID --product PRODUCT_ID
 ```
 
 - Example: Execute an order using an existing connection:
 
 ```bash
-sudo docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+sudo docker run --rm neuropacs run-job --order-id ORDER_ID --product PRODUCT_ID --connection-id CONNECTION_ID --aes-key AES_KEY
 ```
 
 - View help menu:
@@ -154,13 +192,13 @@ NOTE: Available formats: TXT, JSON, XML, PNG
 - Example: Retrieves results [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID
+sudo docker run --rm neuropacs get-results --order-id ORDER_ID --format FORMAT
 ```
 
 - Example: Retrieves results using an existing connection:
 
 ```bash
-sudo docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+sudo docker run --rm neuropacs get-results --order-id ORDER_ID --format FORMAT --connection-id CONNECTION_ID --aes-key AES_KEY
 ```
 
 - View help menu:
