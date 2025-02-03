@@ -78,6 +78,22 @@ def main():
     upload_dataset_from_dicom_web.add_argument('--connection-id', type=str, required=False, help="Unique base64 connection ID associated with session. Required if providing --aes-key.")
     upload_dataset_from_dicom_web.add_argument('--aes-key', type=str, required=False, help="Unique base64 AES key associated with the provided connection ID. Required if providing --connection-id.")
     upload_dataset_from_dicom_web.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode.')
+
+    qc_check_parser = subparsers.add_parser('qc-check', 
+    help='QC/Compliance validation for an uploaded dataset. Returns QC report in specified format.',
+    description='QC/Compliance validation for an uploaded dataset.\n'
+        'Available formats: TXT, CSV, JSON\n\n'
+        'Examples:\n'
+        '  Retrieves QC results [recommended]:\n'
+        '     docker run --rm neuropacs qc-check --order-id ORDER_ID --format FORMAT \n\n'
+        '  Retrieves QC results using an existing connection:\n'
+        '     docker run --rm neuropacs qc-check --order-id ORDER_ID --format FORMAT  --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+        formatter_class=argparse.RawTextHelpFormatter,
+        usage=argparse.SUPPRESS)
+    qc_check_parser.add_argument('--format', type=str, required=True, help="Format of QC report. ['TXT', 'CSV', 'JSON']")
+    qc_check_parser.add_argument('--order-id', type=str, required=True, help="Unique base64 identifier for the order.")
+    qc_check_parser.add_argument('--connection-id', type=str, required=False, help="Unique base64 connection ID associated with session. Required if providing --aes-key.")
+    qc_check_parser.add_argument('--aes-key', type=str, required=False, help="Unique base64 AES key associated with the provided connection ID. Required if providing --connection-id.")
     
     run_job_parser = subparsers.add_parser('run-job', 
     help='Executes a Neuropacs order. Returns a status code.',
@@ -85,9 +101,9 @@ def main():
             'Available product(s): Atypical/MSAp/PSP-v1.0\n\n'
             'Examples:\n'
             '  Execute an order:\n'
-            '     docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID\n\n'
+            '     docker run --rm neuropacs run-job --order-id ORDER_ID --product PRODUCT_ID \n\n'
             '  Execute an order using an existing connection:\n'
-            '     docker run --rm neuropacs run-job --product PRODUCT_ID --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+            '     docker run --rm neuropacs run-job --order-id ORDER_ID --product PRODUCT_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
             formatter_class=argparse.RawTextHelpFormatter,
             usage=argparse.SUPPRESS)
     run_job_parser.add_argument('--product', type=str, required=True, help="Neuropacs product to be executed.")
@@ -112,18 +128,36 @@ def main():
     get_results_parser = subparsers.add_parser('get-results', 
     help='Retrieves results from completed neuropacs™ order. Return result in specified format.',
     description='Retrieves current status of a running neuropacs™ order.\n'
-        'Available formats: TXT, JSON, XML, PNG\n\n'
+        'Available formats: TXT, JSON, XML, PNG, FEATURES\n\n'
         'Examples:\n'
         '  Retrieves results [recommended]:\n'
-        '     docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID\n\n'
+        '     docker run --rm neuropacs get-results --order-id ORDER_ID --format FORMAT \n\n'
         '  Retrieves results using an existing connection:\n'
-        '     docker run --rm neuropacs get-results --format FORMAT --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+        '     docker run --rm neuropacs get-results --order-id ORDER_ID --format FORMAT --connection-id CONNECTION_ID --aes-key AES_KEY\n',
         formatter_class=argparse.RawTextHelpFormatter,
         usage=argparse.SUPPRESS)
-    get_results_parser.add_argument('--format', type=str, required=True, help="Format of result file. ['TXT', 'XML', 'JSON', 'PNG']")
+    get_results_parser.add_argument('--format', type=str, required=True, help="Format of result file. ['TXT', 'XML', 'JSON', 'PNG', 'FEATURES']")
     get_results_parser.add_argument('--order-id', type=str, required=True, help="Unique base64 identifier for the order.")
     get_results_parser.add_argument('--connection-id', type=str, required=False, help="Unique base64 connection ID associated with session. Required if providing --aes-key.")
     get_results_parser.add_argument('--aes-key', type=str, required=False, help="Unique base64 AES key associated with the provided connection ID. Required if providing --connection-id.")
+
+    get_report_parser = subparsers.add_parser('get-report', 
+    help='Generate a structured API key usage report. Returns report in specified format.',
+    description='Generate a structured API key usage report for any neuropacs™ API key. If an admin API key is used. An aggregated report will be created with all keys associated with the same institution. If "email" format is used, an email will be sent to the admin associated with the specified API key.\n'
+        'Available formats: TXT, JSON, EMAIL\n\n'
+        'Examples:\n'
+        '  Generates report [recommended]:\n'
+        '     docker run --rm neuropacs get-report --format FORMAT --start-date START_DATE --end-date END_DATE\n\n'
+        '  Generates report using an existing connection:\n'
+        '     docker run --rm neuropacs get-results --format FORMAT --start-date START_DATE --end-date END_DATE --connection-id CONNECTION_ID --aes-key AES_KEY\n',
+        formatter_class=argparse.RawTextHelpFormatter,
+        usage=argparse.SUPPRESS)
+    get_report_parser.add_argument('--format', type=str, required=True, help="Format of result file. ['TXT', 'JSON', 'EMAIL']")
+    get_report_parser.add_argument('--start-date', type=str, required=True, help="Start date of report in the form MM/DD/YYYY.")
+    get_report_parser.add_argument('--end-date', type=str, required=True, help="End date of report in the form MM/DD/YYYY.")
+    get_report_parser.add_argument('--connection-id', type=str, required=False, help="Unique base64 connection ID associated with session. Required if providing --aes-key.")
+    get_report_parser.add_argument('--aes-key', type=str, required=False, help="Unique base64 AES key associated with the provided connection ID. Required if providing --connection-id.")
+
 
     args = parser.parse_args()
 
@@ -192,6 +226,23 @@ def main():
                 upload_status = npcs.upload_dataset_from_dicom_web(order_id=order_id, wado_url=wado_url, study_uid=study_uid)
         print(upload_status)
 
+    elif args.command == "qc-check":
+        connection_id = args.connection_id
+        aes_key = args.aes_key
+        order_id = args.order_id
+        format = args.format
+
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key, origin_type="CLI")
+        if (connection_id is not None) and (aes_key is not None) :
+            npcs.connection_id = connection_id
+            npcs.aes_key = aes_key
+        else:  
+            npcs.connect()
+
+        results = npcs.qc_check(order_id=order_id, format=format)
+        print(results)
+
+
     elif args.command == "run-job":
         connection_id = args.connection_id
         aes_key = args.aes_key
@@ -227,14 +278,32 @@ def main():
         order_id = args.order_id
         format = args.format
         npcs = neuropacs.init(server_url=server_url, api_key=api_key, origin_type="CLI")
+
         if (connection_id is not None) and (aes_key is not None) :
             npcs.connection_id = connection_id
             npcs.aes_key = aes_key
         else:  
             npcs.connect()
 
-        results = npcs.get_results(format=format, order_id=order_id)
+        results = npcs.get_results(order_id=order_id, format=format)
         print(results)
+
+    elif args.command == "get-report":
+        connection_id = args.connection_id
+        aes_key = args.aes_key
+        format = args.format
+        start_date = args.start_date
+        end_date = args.end_date
+
+        npcs = neuropacs.init(server_url=server_url, api_key=api_key, origin_type="CLI")
+        if (connection_id is not None) and (aes_key is not None) :
+            npcs.connection_id = connection_id
+            npcs.aes_key = aes_key
+        else:  
+            npcs.connect()
+
+        report = npcs.get_report(format=format, start_date=start_date, end_date=end_date)
+        print(report)
 
 
 if __name__ == '__main__':

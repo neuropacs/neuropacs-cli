@@ -53,7 +53,7 @@ NOTE: This is optional. Each command will start a new session unless custom sess
 docker run --rm neuropacs connect
 ```
 
-- View help menu:
+- View help menu for more details:
 
 ```bash
 docker run --rm neuropacs connect -h
@@ -73,7 +73,7 @@ docker run --rm neuropacs new-job
 docker run --rm neuropacs new-job --connection-id CONNECTION_ID --aes-key AES_KEY
 ```
 
-- View help menu:
+- View help menu for more details:
 
 ```bash
 docker run --rm neuropacs new-job -h
@@ -90,13 +90,13 @@ docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset-from-path --
 - Example: Upload a dataset from path in verbose mode:
 
 ```bash
-docker run --rm -v /path/to/dataset/:/data neuropacs upload-dataset-from-path -v --order-id ORDER_ID
+docker run --rm -v /path/to/dataset/:/data neuropacs supload-dataset-from-path -v --order-id ORDER_ID
 ```
 
-- View help menu:
+- View help menu for more details:
 
 ```bash
-sudo docker run --rm neuropacs upload-dataset  -h
+docker run --rm neuropacs upload-dataset-from-path  -h
 ```
 
 ### Uploads a dataset from DICOMweb WADO-RS. Returns upload status.
@@ -137,10 +137,32 @@ docker run --rm --network host neuropacs upload-dataset-from-dicom-web -v --orde
 docker run --rm --network host upload-dataset-from-dicom-web --order-id ORDER_ID --wado_url BASE_URL --study-uid STUDY_UID --connection-id CONNECTION_ID --aes-key AES_KEY --username USERNAME --password PASSWORD
 ```
 
-- View help menu:
+- View help menu for more details:
 
 ```bash
-sudo docker run --rm neuropacs upload-dataset  -h
+docker run --rm neuropacs upload-dataset-from-dicom-web  -h
+```
+
+### QC/Compliance validation for an uploaded dataset. Returns QC report in specified format.
+
+NOTE: Available formats: TXT, CSV, JSON
+
+- Example: Retrieves QC results [recommended]:
+
+```bash
+docker run --rm neuropacs qc-check --order-id ORDER_ID --format FORMAT
+```
+
+- Example: Retrieves QC results using an existing connection:
+
+```bash
+docker run --rm neuropacs qc-check --order-id ORDER_ID --format FORMAT  --connection-id CONNECTION_ID --aes-key AES_KEY
+```
+
+- View help menu for more details:
+
+```bash
+docker run --rm neuropacs qc-check  -h
 ```
 
 ### Executes a neuropacs™ order. Returns a status code.
@@ -150,19 +172,19 @@ NOTE: To use the current PD vs MSP diagnostic pipeline, use "Atypical/MSAp/PSP-v
 - Example: Executes an order [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs run-job --order-id ORDER_ID --product PRODUCT_ID
+docker run --rm neuropacs run-job --order-id ORDER_ID --product PRODUCT_ID
 ```
 
 - Example: Execute an order using an existing connection:
 
 ```bash
-sudo docker run --rm neuropacs run-job --order-id ORDER_ID --product PRODUCT_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+docker run --rm neuropacs run-job --order-id ORDER_ID --product PRODUCT_ID --connection-id CONNECTION_ID --aes-key AES_KEY
 ```
 
-- View help menu:
+- View help menu for more details:
 
 ```bash
-sudo docker run --rm neuropacs run-job  -h
+docker run --rm neuropacs run-job  -h
 ```
 
 ### Retrieves current status of a running neuropacs™ order. Return status JSON.
@@ -170,41 +192,57 @@ sudo docker run --rm neuropacs run-job  -h
 - Example: Check order status [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs check-status --order-id ORDER_ID
+docker run --rm neuropacs check-status --order-id ORDER_ID
 ```
 
 - Example: Check order status using an existing connection:
 
 ```bash
-sudo docker run --rm neuropacs check-status --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
+docker run --rm neuropacs check-status --order-id ORDER_ID --connection-id CONNECTION_ID --aes-key AES_KEY
 ```
 
-- View help menu:
+- View help menu for more details:
 
 ```bash
-sudo docker run --rm neuropacs check-status  -h
+docker run --rm neuropacs check-status  -h
 ```
 
 ### Retrieves results from completed neuropacs™ order. Return result in specified format.
 
-NOTE: Available formats: TXT, JSON, XML, PNG
+NOTE: Available formats: TXT, JSON, XML, PNG, FEATURES
 
 - Example: Retrieves results [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs get-results --order-id ORDER_ID --format FORMAT
+docker run --rm neuropacs get-results --order-id ORDER_ID --format FORMAT
 ```
 
 - Example: Retrieves results using an existing connection:
 
 ```bash
-sudo docker run --rm neuropacs get-results --order-id ORDER_ID --format FORMAT --connection-id CONNECTION_ID --aes-key AES_KEY
+docker run --rm neuropacs get-results --order-id ORDER_ID --format FORMAT --connection-id CONNECTION_ID --aes-key AES_KEY
 ```
 
-- View help menu:
+### Generate a structured API key usage report. Returns report in specified format.
+
+NOTE: Available formats: TXT, JSON, EMAIL
+
+- Example: Generates report [recommended]:
 
 ```bash
-sudo docker run --rm neuropacs get-results  -h
+docker run --rm neuropacs get-report --format FORMAT --start-date START_DATE --end-date END_DATE
+```
+
+- Example: Generates report using an existing connection:
+
+```bash
+docker run --rm neuropacs get-report --format FORMAT --start-date START_DATE --end-date END_DATE --connection-id CONNECTION_ID --aes-key AES_KEY
+```
+
+- View help menu for more details:
+
+```bash
+docker run --rm neuropacs get-report  -h
 ```
 
 ## Author
