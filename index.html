@@ -99,6 +99,9 @@
     <span class="code-comment"># Upload a dataset via path (hint: use '-v' flag for verbose mode)</span>
     docker run --rm -v <span class="code-string">/local/path/to/dataset/</span>:/data neuropacs <span class="code-keyword">upload-dataset-from-path</span> <span class="code-function">(-v)</span> --order-id ORDER_ID
 
+    <span class="code-comment"># Retrieve QC results</span>
+    docker run --rm neuropacs <span class="code-keyword">qc-check</span> --order-id ORDER_ID --format FORMAT
+
     <span class="code-comment"># Start an order</span>
     docker run --rm neuropacs <span class="code-keyword">run-job</span> --order-id ORDER_ID --product PRODUCT_ID 
 
@@ -109,6 +112,21 @@
     docker run --rm neuropacs <span class="code-keyword">get-results</span> --order-id ORDER_ID --format FORMAT 
         </div>
         </code></pre>
+
+
+        <div class="code-section">
+          <h3>API Key Usage Report</h3>
+          <p>Generate a structured API key usage report for any neuropacs™ API key. If an admin API key is used. An aggregated report will be created with all keys associated with the same institution. If "email" format is used, an email will be sent to the admin associated with the specified API key.</p>
+          <pre class="code-container"><code class="language-shell">
+  <span class="code-comment"># Create a session</span>
+  docker run --rm neuropacs <span class="code-keyword">connect</span>
+
+  <span class="code-comment"># Generate a report</span>
+  docker run --rm neuropacs <span class="code-keyword">get-report</span> --format FORMAT --start-date START_DATE --end-date END_DATE 
+    </code></pre>
+      </div>
+
+
       <section id="dicom-web">
         <div class="code-section">
           <h3>DICOMweb Integration</h2>
