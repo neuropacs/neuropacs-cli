@@ -1,5 +1,5 @@
-# neuropacs CLI v1.0.2
-# (c) 2024 neuropacs
+# neuropacs CLI v1.0.3
+# (c) 2025 neuropacs
 # Released under the MIT License.
 
 import argparse
