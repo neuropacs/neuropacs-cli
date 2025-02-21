@@ -28,14 +28,17 @@
         <li><a href="#contact">Contact</a></li>
         <li><a href="#license">License</a></li>
         <li><a href="#explore">Explore</a></li>
-
-        <!-- <li><a href="#faq">FAQ</a></li> -->
       </ul>
     </nav>
 
     <div class="image-row">
-      <a href="https://github.com/neuropacs/neuropacs-cli"
-        ><img src="./resources/github_logo.png"
+      <a href="https://github.com/neuropacs/neuropacs-cli" target="_blank"
+        ><img alt="Github logo" src="./resources/github_logo.png"
+      /></a>
+      <a
+        href="https://hub.docker.com/r/neuropacman/neuropacs-cli"
+        target="_blank"
+        ><img alt="Docker Hub logo" src="./resources/docker_logo_blk.png"
       /></a>
     </div>
 
@@ -69,86 +72,144 @@
             </p>
           </li>
         </ul>
-        <h3>Build the Docker image</h3>
-        <p>Clone the neuropacs-cli repository and build from the Dockerfile</p>
+
+        <!-- OPTION 1 -->
+        <h3>Option 1: Pull image from Docker Hub</h3>
+        <p>Pull the official Docker image from Docker Hub (most common).</p>
         <pre class="code-container"><code class="language-shell">
-    <span class="code-comment"># Clone the repository using Git</span>
-    git clone https://github.com/neuropacs/neuropacs-cli.git
+  <span class="code-comment"># (1) Pull the latest verison of the Docker image</span>
+  docker <span class="code-keyword">pull</span> neuropacman/neuropacs-cli:latest
+  </code></pre>
 
-    <span class="code-comment"># Navigate to the neuropacs-cli project</span>
-    cd /path/to/neuropacs-cli/
+        <br />
+        <!-- OPTION 2 -->
+        <h3>Option 2: Build with docker-compose</h3>
+        <p>
+          Use a docker-compose.yaml and .env file to build and configure
+          neuropacs in one simple step.
+        </p>
+        <pre class="code-container"><code class="language-shell">
+  <span class="code-comment"># (1) Add your API key to a .env file (a template is provide in the Github repository)</span>
+        
+  <span class="code-comment"># (2) Build with docker-commpose</span>
+  docker-compose <span class="code-keyword">up</span>
+  </code></pre>
+        <br />
+        <!-- OPTION 3 -->
+        <h3>Option 3: Build from source</h3>
+        <p>
+          Clone the neuropacs-cli repository and build from the provided
+          Dockerfile
+        </p>
+        <pre class="code-container"><code class="language-shell">
+  <span class="code-comment"># (1) Clone the repository using Git</span>
+  git <span class="code-keyword">clone</span> https://github.com/neuropacs/neuropacs-cli.git
 
-    <span class="code-comment"># Build the Docker image from the Dockerfile</span>
-    docker build . --no-cache --build-arg server_url=SERVER_URL --build-arg api_key=API_KEY -t neuropacs
-        </code></pre>
+  <span class="code-comment"># (2) Navigate to the neuropacs-cli project</span>
+  cd /path/to/neuropacs-cli/
+
+  <span class="code-comment"># (3) Build the Docker image from the Dockerfile</span>
+  docker <span class="code-keyword">build</span> . --no-cache -t neuropacs
+    </code></pre>
       </section>
 
       <section id="usage">
+        <br />
         <h2>Usage</h2>
-        
+
         <div class="code-section">
+          <h3>Using your API key</h3>
+          <p>
+            If using options 1 or 3 when building neuropacs-cli, you will need
+            to pass your API key with each run command. Use one of the two
+            following options:
+          </p>
+          <ol>
+            <li>
+              Pass your API key manually using '-e' flag in each run command
+              [most common]
+            </li>
+            <pre class="code-container"><code class="language-shell">
+  docker run --rm <span class="code-function">-e API_KEY=your_api_key</span> neuropacs <span class="code-keyword">new-job</span>
+              </code></pre>
+            <br />
+            <li>Pass a .env file using '--env-file' flag in each command</li>
+            <pre class="code-container"><code class="language-shell">
+  docker run --rm <span class="code-function">--env-file .env</span> neuropacs <span class="code-keyword">new-job</span>
+            </code></pre>
+          </ol>
+          <br />
           <h3>Example</h3>
           <p>Working example using the neuropacs™ CLI.</p>
-          <pre class="code-container"><code class="language-shell">
-    <span class="code-comment"># Create a session</span>
-    docker run --rm neuropacs <span class="code-keyword">connect</span>
-
-    <span class="code-comment"># Create a new order</span>
-    docker run --rm neuropacs <span class="code-keyword">new-job</span>
-
-    <span class="code-comment"># Upload a dataset via path (hint: use '-v' flag for verbose mode)</span>
-    docker run --rm -v <span class="code-string">/local/path/to/dataset/</span>:/data neuropacs <span class="code-keyword">upload-dataset-from-path</span> <span class="code-function">(-v)</span> --order-id ORDER_ID
-
-    <span class="code-comment"># Retrieve QC results</span>
-    docker run --rm neuropacs <span class="code-keyword">qc-check</span> --order-id ORDER_ID --format FORMAT
-
-    <span class="code-comment"># Start an order</span>
-    docker run --rm neuropacs <span class="code-keyword">run-job</span> --order-id ORDER_ID --product PRODUCT_ID 
-
-    <span class="code-comment"># Check order status</span>
-    docker run --rm neuropacs <span class="code-keyword">check-status</span> --order-id ORDER_ID
-
-    <span class="code-comment"># Retrieve job results</span>
-    docker run --rm neuropacs <span class="code-keyword">get-results</span> --order-id ORDER_ID --format FORMAT 
-        </div>
-        </code></pre>
-
-
-        <div class="code-section">
-          <h3>API Key Usage Report</h3>
-          <p>Generate a structured API key usage report for any neuropacs™ API key. If an admin API key is used. An aggregated report will be created with all keys associated with the same institution. If "email" format is used, an email will be sent to the admin associated with the specified API key.</p>
+          <p>
+            <b>NOTE:</b> To view the help screen of any command, use the '-h' or
+            '--help' flag (ex. sudo docker run --rm neuropacs connect -h).
+          </p>
           <pre class="code-container"><code class="language-shell">
   <span class="code-comment"># Create a session</span>
-  docker run --rm neuropacs <span class="code-keyword">connect</span>
+  docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">connect</span>
+
+  <span class="code-comment"># Create a new order</span>
+  docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">new-job</span>
+
+  <span class="code-comment"># Upload a dataset via path (hint: use '--progress' option for to display a progress bar during upload (verbose))</span>
+  docker run --rm -v -e API_KEY=your_api_key <span class="code-string">/local/path/to/dataset/</span>:/data neuropacs <span class="code-keyword">upload-dataset-from-path</span> <span class="code-function">(--progress)</span> --order-id ORDER_ID
+
+  <span class="code-comment"># Retrieve QC results</span>
+  docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">qc-check</span> --order-id ORDER_ID --format FORMAT
+
+  <span class="code-comment"># Start an order</span>
+  docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">run-job</span> --order-id ORDER_ID --product PRODUCT_ID 
+
+  <span class="code-comment"># Check order status</span>
+  docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">check-status</span> --order-id ORDER_ID
+
+  <span class="code-comment"># Retrieve job results</span>
+  docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">get-results</span> --order-id ORDER_ID --format FORMAT 
+  </code></pre>
+        </div>
+      </section>
+
+      <div class="code-section">
+        <h3>API Key Usage Report</h3>
+        <p>
+          Generate a structured API key usage report for any neuropacs™ API key.
+          If an admin API key is used. An aggregated report will be created with
+          all keys associated with the same institution. If "email" format is
+          used, an email will be sent to the admin associated with the specified
+          API key.
+        </p>
+        <pre class="code-container"><code class="language-shell">
+  <span class="code-comment"># Create a session</span>
+  docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">connect</span>
 
   <span class="code-comment"># Generate a report</span>
-  docker run --rm neuropacs <span class="code-keyword">get-report</span> --format FORMAT --start-date START_DATE --end-date END_DATE 
+  docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">get-report</span> --format FORMAT --start-date START_DATE --end-date END_DATE 
     </code></pre>
       </div>
 
-
       <section id="dicom-web">
         <div class="code-section">
-          <h3>DICOMweb Integration</h2>
-          <p>The API retrieves and processes images directly from DICOMweb-compliant servers via WADO-RS, enabling neuropacs™ analysis for streamlined diagnostic workflows.</p>
+          <h2>DICOMweb Integration</h2>
+          <p>
+            The API retrieves and processes images directly from
+            DICOMweb-compliant servers via WADO-RS, enabling neuropacs™ analysis
+            for streamlined diagnostic workflows.
+          </p>
           <pre class="code-container"><code class="language-shell">
-    <span class="code-comment"># Upload a dataset via a DICOMweb WADO-RS server w/ credentials (hint: use '-v' flag for verbose mode)</span>
-    docker run --rm neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(-v)</span> --order-id ORDER_ID --wado-url WADO_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD
+    <span class="code-comment"># Upload a dataset via a DICOMweb WADO-RS server w/ credentials (hint: use '--progress' option for to display a progress bar during upload (verbose))</span>
+    docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(--progress)</span> --order-id ORDER_ID --wado-url WADO_URL --study-uid STUDY_UID --username USERNAME --password PASSWORD
 
-    <span class="code-comment"># Upload a dataset via a DICOMweb WAD-RS server w/out credentials (hint: use '-v' flag for verbose mode)</span>
-    docker run --rm neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(-v)</span> --order-id ORDER_ID --wado-url WADO_URL --study-uid STUDY_UID
+    <span class="code-comment"># Upload a dataset via a DICOMweb WAD-RS server w/out credentials (hint: use '--progress' option for to display a progress bar during upload (verbose))</span>
+    docker run --rm -e API_KEY=your_api_key neuropacs <span class="code-keyword">upload-dataset-from-dicom-web</span> <span class="code-function">(--progress)</span> --order-id ORDER_ID --wado-url WADO_URL --study-uid STUDY_UID
 
     <span class="code-comment"># NOTE: If your DICOMweb WADO-RS server is hosted locally, replace "localhost" with "host.docker.internal".</span>
     <span class="code-comment">     # Ex. "http://localhost:8080/dcm4chee-arc/aets/DCM4CHEE/rs" -> "http://host.docker.internal:8080/dcm4chee-arc/aets/DCM4CHEE/rs"</span>
         </code></pre>
         </div>
       </section>
-      <p>
-        NOTE: To view the help screen of any command, use the '-h' or '--help'
-        flag (ex. sudo docker run --rm neuropacs connect -h).
-      </p>
-      </section>
 
+      <br />
       <section id="contact">
         <h2>Contact</h2>
         <p>
@@ -181,7 +242,9 @@
           <li>
             <a href="https://neuropacs.github.io/SlicerNeuropacs/">3D Slicer</a>
           </li>
-          <li><a href="https://neuropacs.github.io/neuropacsPyUi/">neuropacsUI</a></li>
+          <li>
+            <a href="https://neuropacs.github.io/neuropacsPyUi/">neuropacsUI</a>
+          </li>
           <li>
             <a href="#dicom-web">DICOMweb</a>
           </li>
@@ -210,14 +273,6 @@
           </li>
         </ul>
       </section>
-
-      <!-- <section id="faq">
-        <h2>FAQ</h2>
-        <p><strong>Q1:</strong> How do I contribute to this project?</p>
-        <p>
-          <strong>A1:</strong> Fork the repository and submit a pull request.
-        </p>
-      </section> -->
     </main>
 
     <footer class="footer">
