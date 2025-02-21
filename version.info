@@ -1,4 +1,7 @@
-v1.0.3:
-    - Add get_report API to retrieve a structure API key usage report for a specified date range
-    - Add qc_check API to retrieve QC/Compliance check results
-    - Add "features" option to get_results API to retrieve contents of AIDP.csv features
+v1.0.4:
+    - Now pass API key at runtime (w/ -e or --env-file flag)
+    - Offer docker-compose solution that references a .env file
+    - Removed unecessary dependencies
+    - Add upload progress bar
+    - Add template .env file
+    - Refactor documentation

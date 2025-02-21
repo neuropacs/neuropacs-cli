@@ -1,0 +1,5 @@
+services:
+  myapp:
+    image: neuropacman/neuropacs-cli:latest
+    env_file:
+      - .env
